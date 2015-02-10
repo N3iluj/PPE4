@@ -52,6 +52,7 @@ class UserController extends \BaseController {
 			$user-> tel=Input::get('tel');
 			$user-> email=Input::get('email');
 			$user-> username=Input::get('pseudo');
+			
 			if(Input::get('password')==Input::get('mdp2')){
 				$user-> password= Hash::make(Input::get('password'));
 			}
@@ -59,7 +60,7 @@ class UserController extends \BaseController {
 				Session::flash('fail', 'Mots de passe différents');
 				return Redirect::back()->withInput(); 
 			}
-			$user-> nom=Input::get('nom');
+
 			if($user->save()){
 				return Redirect::to('projet/create');
 			}

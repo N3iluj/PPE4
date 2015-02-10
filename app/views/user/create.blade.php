@@ -5,7 +5,7 @@
 
 {{HTML::style('css/datepicker.css')}}
 {{HTML::script('js/jquery-2.1.1.min.js') }}
-{{HTML::script('js/bootstrap-datepicker.js') }}
+{{HTML::script('js/bootstrap-datepicker/js/bootstrap-datepicker.js') }}
 
 <script>
     
@@ -50,7 +50,8 @@ $(document).ready(function(){
         <script>
           $('#datepicker').datepicker({
             format: 'dd/mm/yyyy',
-          })
+            autoclose: true,
+          });
 
         </script>
           <!-- FIN SCRIPT DATEPICKER -->
