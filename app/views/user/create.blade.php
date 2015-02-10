@@ -14,28 +14,40 @@
     {{Form::open(array('url' => 'user', 'method' => 'POST','class'=>'form-horizontal'))}}
       <fieldset>
         <legend>Inscription</legend>
-        <div class="form-group">
+        <div id="inputPseudo" class="form-group">
           {{ Form::label('pseudo','Pseudo', array('class'=>'col-md-2 control-label')) }}
           <div class="col-md-10">
-            {{ Form::text('pseudo', null, array('id' => 'inputPseudo', 'class' => 'form-control', 'placeholder'=>'Pseudo', 'onblur'=>'verifPseudo(this)')) }}
+            {{ Form::text('pseudo', null, array('class' => 'form-control', 'placeholder'=>'Pseudo', 'onblur'=>'verifPseudo(this)')) }}
           </div>
         </div>
-        <div class="form-group">
+        <div id="inputNom" class="form-group">
           {{ Form::label('nom','Nom', array('class'=>'col-md-2 control-label')) }}
           <div class="col-md-10">
-            {{ Form::text('nom', null, array('class' => 'form-control', 'placeholder'=>'Nom','onblur'=>'verif(this)')) }}
+            {{ Form::text('nom', null, array('class' => 'form-control', 'placeholder'=>'Nom','onblur'=>'verifNom(this)')) }}
           </div>
         </div>
-        <div class="form-group">
+        <div id="inputPrenom" class="form-group">
           {{ Form::label('prenom','Prenom', array('class'=>'col-md-2 control-label')) }}
           <div class="col-md-10">
-            {{ Form::text('prenom', null, array('class' => 'form-control', 'placeholder'=>'Prenom')) }}
+            {{ Form::text('prenom', null, array('class' => 'form-control', 'placeholder'=>'Prenom', 'onblur'=>'verifPrenom(this)')) }}
           </div>
         </div>
+        <!--
         <div class="form-group">
           {{ Form::label('dateNaissance','Date de naissance', array('class'=>'col-md-2 control-label')) }}
           <div class="col-md-10">
-            {{ Form::text('dateNaissance', null, array('class' => 'form-control', 'id'=>'datepicker', 'placeholder'=>'Date de naissance')) }}
+            {{ Form::text('dateNaissance', null, array('class' => 'form-control', 'id'=>'datepicker', 'placeholder'=>'Ecrivez votre date de naissance au format : 01/01/2001')) }}
+          </div>
+        </div> -->
+        <div class="form-group">
+          {{ Form::label('dateNaissance','Date de naissance', array('class'=>'col-md-2 control-label')) }}
+          <div class="col-md-10">
+            <div class="input-group">
+              <span id="datepicker" class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>  
+              </span>
+              {{ Form::text('dateNaissance', null, array('class' => 'form-control', 'placeholder'=>'Ecrivez votre date de naissance au format : 01/01/2001')) }}
+            </div>
           </div>
         </div>
 
@@ -45,7 +57,7 @@
           $('#datepicker').datepicker({
             format: 'dd/mm/yyyy',
             autoclose: true,
-            orientation: "left",
+            orientation: 'top',
           });
 
         </script>
@@ -132,16 +144,48 @@
 
 function verifPseudo(champ)
 {
-   if(champ.value.length < 2 || champ.value.length > 25)
+   if(champ.value.length < 3 || champ.value.length > 25)
    {
-    document.getElementById("#inputPseudo").className = "form-group has-error"
+    document.getElementById("inputPseudo").className = "form-group has-error"
    // champ.className = "form-control has-error
     return false;
    }
 
    else
    {
-     document.getElementById("#inputPseudo").className = "form-group has-success"
+     document.getElementById("inputPseudo").className = "form-group has-success"
+      return true;
+   }
+}
+
+function verifNom(champ)
+{
+   if(champ.value.length < 3 || champ.value.length > 25)
+   {
+    document.getElementById("inputNom").className = "form-group has-error"
+   // champ.className = "form-control has-error
+    return false;
+   }
+
+   else
+   {
+     document.getElementById("inputNom").className = "form-group has-success"
+      return true;
+   }
+}
+
+function verifPrenom(champ)
+{
+   if(champ.value.length < 3 || champ.value.length > 25)
+   {
+    document.getElementById("inputPrenom").className = "form-group has-error"
+   // champ.className = "form-control has-error
+    return false;
+   }
+
+   else
+   {
+     document.getElementById("inputPrenom").className = "form-group has-success"
       return true;
    }
 }
