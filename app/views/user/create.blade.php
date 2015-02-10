@@ -24,7 +24,7 @@ $(document).ready(function(){
         <div class="form-group">
           {{ Form::label('nom','Nom', array('class'=>'col-md-2 control-label')) }}
           <div class="col-md-10">
-            {{ Form::text('nom', null, array('class' => 'form-control', 'placeholder'=>'Nom')) }}
+            {{ Form::text('nom', null, array('class' => 'form-control', 'placeholder'=>'Nom','onblur'=>'verif(this)')) }}
           </div>
         </div>
         <div class="form-group">
@@ -113,5 +113,19 @@ $(document).ready(function(){
 </form>
 </div>
 </div>
-
+<script>
+function verif(champ)
+{
+   if(champ.value.length < 2 || champ.value.length > 25)
+   {
+    document.getElementById("DivNom").className = "form-group has-error"
+   // champ.className = "form-control has-error
+           return false;
+   }
+   else
+   {
+     document.getElementById("DivNom").className = "form-group has-success"
+      return true;
+   }
+}</script>
 @stop
