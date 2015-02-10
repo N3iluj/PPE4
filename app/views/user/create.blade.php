@@ -22,6 +22,12 @@ $(document).ready(function(){
       <fieldset>
         <legend>Inscription</legend>
         <div class="form-group">
+          {{ Form::label('pseudo','Pseudo', array('class'=>'col-md-2 control-label')) }}
+          <div class="col-md-10">
+            {{ Form::text('pseudo', null, array('class' => 'form-control', 'placeholder'=>'Pseudo')) }}
+          </div>
+        </div>
+        <div class="form-group">
           {{ Form::label('nom','Nom', array('class'=>'col-md-2 control-label')) }}
           <div class="col-md-10">
             {{ Form::text('nom', null, array('class' => 'form-control', 'placeholder'=>'Nom','onblur'=>'verif(this)')) }}
@@ -56,6 +62,23 @@ $(document).ready(function(){
           </div>
         </div>
         <div class="form-group">
+          {{ Form::label('statut',"Vous êtes?", array('class'=>'col-lg-2 control-label')) }}
+          <div class="col-md-10">
+            <div class="radio">
+              <label>
+                <input type="radio" name="statut" id="statut" value="exposant" checked="">
+                Exposant
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="statut" id="statut" value="vendeur">
+                Vendeur
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
           {{ Form::label('cp','Code Postal', array('class'=>'col-md-2 control-label')) }}
           <div class="col-md-10">
             {{ Form::text('cp', null, array('class' => 'form-control', 'placeholder'=>'Code Postal')) }}
@@ -68,15 +91,15 @@ $(document).ready(function(){
           </div>
         </div>
         <div class="form-group">
-          {{ Form::label('email','Email', array('class'=>'col-md-2 control-label')) }}
+          {{ Form::label('tel','Téléphone', array('class'=>'col-md-2 control-label')) }}
           <div class="col-md-10">
-            {{ Form::email('email', null, array('class' => 'form-control', 'placeholder'=>'Email')) }}
+            {{ Form::text('tel', null, array('class' => 'form-control', 'placeholder'=>'Numero de téléphone')) }}
           </div>
         </div>
         <div class="form-group">
-          {{ Form::label('pseudo','Pseudo', array('class'=>'col-md-2 control-label')) }}
+          {{ Form::label('email','Email', array('class'=>'col-md-2 control-label')) }}
           <div class="col-md-10">
-            {{ Form::text('pseudo', null, array('class' => 'form-control', 'placeholder'=>'Pseudo')) }}
+            {{ Form::email('email', null, array('class' => 'form-control', 'placeholder'=>'Email')) }}
           </div>
         </div>
         <div class="form-group">
