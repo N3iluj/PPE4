@@ -15,10 +15,10 @@ class CreateProjetTable extends Migration {
 		Schema::create('projets', function($table) {
 			$table->increments('id')->unsigned();
 			$table->string('theme', 64);
-			$table->float('longueur');
-			$table->float('largeur');
+			$table->decimal('longueur', 8, 2);
+			$table->decimal('largeur', 8, 2);
 			$table->integer('nb_piece');
-			$table->integer('valeur');
+			$table->decimal('valeur', 8, 2);
 			$table->boolean('courant');
 			$table->integer('user_id')->unsigned();
 				$table->foreign('user_id')->references('id')->on('users');
