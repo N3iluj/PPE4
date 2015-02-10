@@ -53,19 +53,14 @@ class UserController extends \BaseController {
 			$user-> email=Input::get('email');
 			$user-> username=Input::get('pseudo');
 			if(Input::get('password')==Input::get('mdp2')){
-				$pass = Input::get('password');
-				$cryptPass = Hash::make($pass);
-				$user-> password = $cryptPass;
+				$user-> password= Hash::make(Input::get('password'));
 			}
 			else {
 				Session::flash('fail', 'Mots de passe différents');
 				return Redirect::back()->withInput(); 
 			}
-
-			$user-> password=Input::get('password');
 			$user-> nom=Input::get('nom');
-
-			if($user->save()) {
+			if($user->save()){
 				return Redirect::to('projet/create');
 			}
 		
@@ -126,8 +121,7 @@ class UserController extends \BaseController {
 	{
 		echo 'lol';
 	}
-    
-    public function getcg()
+        public function getcg()
         {
             $lescgs=cg::all();
   return View::make('user/create')->with('lescgs',$lescgs);
