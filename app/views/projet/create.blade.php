@@ -51,7 +51,7 @@
         <div class="form-group">
           {{ Form::label('valeur','Estimez la valeur de votre diaporama (en €)', array('class'=>'col-lg-2 control-label')) }}
           <div class="col-lg-10">
-            {{ Form::text('valeur', null, array('class' => 'form-control', 'placeholder'=>'0')) }}
+            {{ Form::text('valeur', null, array('class' => 'form-control', 'placeholder'=>'0.00')) }}
           </div>
         </div>
         <div class="form-group">
