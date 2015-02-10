@@ -7,14 +7,7 @@
 {{HTML::script('js/jquery-2.1.1.min.js') }}
 {{HTML::script('js/bootstrap-datepicker/js/bootstrap-datepicker.js') }}
 
-<script>
-    
-$(document).ready(function(){
-    $("#javascript").click(function(){
-        alert( "#cg");
-    });
-});
-</script>
+
 
 <div class="row">
   <div class="well bs-component">
@@ -24,7 +17,7 @@ $(document).ready(function(){
         <div class="form-group">
           {{ Form::label('pseudo','Pseudo', array('class'=>'col-md-2 control-label')) }}
           <div class="col-md-10">
-            {{ Form::text('pseudo', null, array('class' => 'form-control', 'placeholder'=>'Pseudo')) }}
+            {{ Form::text('pseudo', null, array('id' => 'inputPseudo', 'class' => 'form-control', 'placeholder'=>'Pseudo', 'onblur'=>'verifPseudo(this)')) }}
           </div>
         </div>
         <div class="form-group">
@@ -48,6 +41,7 @@ $(document).ready(function(){
 
          <!-- DEBUT SCRIPT DATEPICKER -->
         <script>
+
           $('#datepicker').datepicker({
             format: 'dd/mm/yyyy',
             autoclose: true,
@@ -118,9 +112,7 @@ $(document).ready(function(){
         </div>
         <div class="form-group">
           <div style="text-align: center;">
-         
-            <input type="checkbox"> J'accepte les
-<div id ="javascript"><p> conditions générales d'utilisation.</p> </div>
+            <input type="checkbox"> J'accepte les <div id ="javascript"><p> conditions générales d'utilisation.</p> </div>
           </div>
         </div>
         <div class="form-group">
@@ -132,25 +124,31 @@ $(document).ready(function(){
             {{Form::submit('Suivant', array('class'=>'btn btn-primary'))}}
             {{Form::close()}}
           </div>
-         
-    </div>
-  </fieldset>
-</form>
+        </div>
+      </fieldset>
+    </form>
+  </div>
 </div>
-</div>
+
 <script>
-function verif(champ)
+
+function verifPseudo(champ)
 {
    if(champ.value.length < 2 || champ.value.length > 25)
    {
-    document.getElementById("DivNom").className = "form-group has-error"
+    document.getElementById("#inputPseudo").className = "form-group has-error"
    // champ.className = "form-control has-error
-           return false;
+    return false;
    }
+
    else
    {
-     document.getElementById("DivNom").className = "form-group has-success"
-      return true;
+     document.getElementById("#inputPseudo").className = "form-group has-success"
+    return true;
    }
-}</script>
+}
+
+</script>
+
+
 @stop
