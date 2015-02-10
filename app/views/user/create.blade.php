@@ -32,26 +32,15 @@
             {{ Form::text('prenom', null, array('class' => 'form-control', 'placeholder'=>'Prenom', 'onblur'=>'verifPrenom(this)')) }}
           </div>
         </div>
-        <!--
-        <div class="form-group">
+        <div id="inputDate" class="form-group">
           {{ Form::label('dateNaissance','Date de naissance', array('class'=>'col-md-2 control-label')) }}
           <div class="col-md-10">
-            {{ Form::text('dateNaissance', null, array('class' => 'form-control', 'id'=>'datepicker', 'placeholder'=>'Ecrivez votre date de naissance au format : 01/01/2001')) }}
-          </div>
-        </div> -->
-        <div class="form-group">
-          {{ Form::label('dateNaissance','Date de naissance', array('class'=>'col-md-2 control-label')) }}
-          <div class="col-md-10">
-            <div class="input-group">
-              <span id="datepicker" class="input-group-addon">
-                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>  
-              </span>
-              {{ Form::text('dateNaissance', null, array('class' => 'form-control', 'placeholder'=>'Ecrivez votre date de naissance au format : 01/01/2001')) }}
-            </div>
+            {{ Form::text('dateNaissance', null, array('class' => 'form-control', 'id'=>'datepicker', 'placeholder'=>'Ecrivez votre date de naissance au format : 01/01/2001', 'onblur'=>'verifDate(this)')) }}
           </div>
         </div>
 
          <!-- DEBUT SCRIPT DATEPICKER -->
+
         <script>
 
           $('#datepicker').datepicker({
@@ -61,6 +50,7 @@
           });
 
         </script>
+        
           <!-- FIN SCRIPT DATEPICKER -->
 
         <div class="form-group">
@@ -186,6 +176,22 @@ function verifPrenom(champ)
    else
    {
      document.getElementById("inputPrenom").className = "form-group has-success"
+      return true;
+   }
+}
+
+function verifDate(champ)
+{
+   if(champ.value.length < 3 || champ.value.length > 25)
+   {
+    document.getElementById("inputDate").className = "form-group has-error"
+   // champ.className = "form-control has-error
+    return false;
+   }
+
+   else
+   {
+     document.getElementById("inputDate").className = "form-group has-success"
       return true;
    }
 }
