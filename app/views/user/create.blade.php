@@ -116,10 +116,8 @@
           </div>
         </div>
         <div class="form-group">
-          <div class="col-md-4">
-          </div>
-          <div class="col-md-4">
-          </div>
+          <div class="col-md-4"></div>
+          <div class="col-md-4"></div>
           <div class="col-md-4">
             {{Form::submit('Suivant', array('class'=>'btn btn-primary'))}}
             {{Form::close()}}
@@ -144,7 +142,7 @@ function verifPseudo(champ)
    else
    {
      document.getElementById("#inputPseudo").className = "form-group has-success"
-    return true;
+      return true;
    }
 }
 

@@ -49,59 +49,22 @@
           </div>
         </div>
         <div class="form-group">
-          {{ Form::label('cp','Code Postal', array('class'=>'col-lg-2 control-label')) }}
+          {{ Form::label('valeur','Estimez la valeur de votre diaporama (en €)', array('class'=>'col-lg-2 control-label')) }}
           <div class="col-lg-10">
-            {{ Form::text('cp', null, array('class' => 'form-control', 'placeholder'=>'Code Postal')) }}
+            {{ Form::text('valeur', null, array('class' => 'form-control', 'placeholder'=>'0€')) }}
           </div>
         </div>
         <div class="form-group">
-          {{ Form::label('ville','Ville', array('class'=>'col-lg-2 control-label')) }}
-          <div class="col-lg-10">
-            {{ Form::text('ville', null, array('class' => 'form-control', 'placeholder'=>'Ville')) }}
-          </div>
-        </div>
-        <div class="form-group">
-          {{ Form::label('email','Email', array('class'=>'col-lg-2 control-label')) }}
-          <div class="col-lg-10">
-            {{ Form::email('email', null, array('class' => 'form-control', 'placeholder'=>'Email')) }}
-          </div>
-        </div>
-        <div class="form-group">
-          {{ Form::label('pseudo','Pseudo', array('class'=>'col-lg-2 control-label')) }}
-          <div class="col-lg-10">
-            {{ Form::text('pseudo', null, array('class' => 'form-control', 'placeholder'=>'Pseudo')) }}
-          </div>
-        </div>
-        <div class="form-group">
-          {{ Form::label('password','Mot de passe', array('class'=>'col-lg-2 control-label')) }}
-          <div class="col-lg-10">
-            {{ Form::password('password', array('class' => 'form-control', 'placeholder'=>'Mot de passe')) }}
-          </div>
-        </div>
-        <div class="form-group">
-          {{ Form::label('mdp2','Retapez votre mot de passe', array('class'=>'col-lg-2 control-label')) }}
-          <div class="col-lg-10">
-            {{ Form::password ('mdp2', array('class' => 'form-control', 'placeholder'=>'Retapez votre mot de passe')) }}
-          </div>
-        </div>
-        <div class="form-group">
-          <div style="text-align: center;">
-            <input type="checkbox"> J'accepte les {{HTML::link('cgu', "conditions générales d'utilisation.")}} 
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-lg-4">
-          </div>
-          <div class="col-lg-4">
-          </div>
+          <div class="col-lg-4"></div>
+          <div class="col-lg-4"></div>
           <div class="col-lg-4">
             {{Form::submit('Suivant', array('class'=>'btn btn-primary'))}}
             {{Form::close()}}
           </div>
-    </div>
-  </fieldset>
-</form>
-</div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
 </div>
 
 @stop
