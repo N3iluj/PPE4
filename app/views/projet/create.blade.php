@@ -36,13 +36,13 @@
           <div class="col-md-10">
             <div class="radio">
               <label>
-                <input type="radio" name="elecTrue" id="optionsRadios1" value="elecTrue" checked="">
+                <input type="radio" name="elec" id="optionsRadios1" value="elecTrue" checked="">
                 Oui
               </label>
             </div>
             <div class="radio">
               <label>
-                <input type="radio" name="elecFalse" id="optionsRadios2" value="elecFalse">
+                <input type="radio" name="elec" id="optionsRadios2" value="elecFalse">
                 Non
               </label>
             </div>

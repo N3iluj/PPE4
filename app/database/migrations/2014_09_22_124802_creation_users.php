@@ -19,11 +19,10 @@ class CreationUsers extends Migration {
 			$table->string('nom', 64);
 			$table->string('prenom', 64);
 			$table->string('date_naissance', 10);
-			$table->integer('tel');
+			$table->string('tel');
 			$table->string('adresse', 64);
-			$table->integer('cp');
+			$table->string('cp');
 			$table->string('ville', 64);
-			$table->string('email', 64)->unique();
 			$table->enum('statut', array('admin', 'exposant','vendeur'))->default('exposant');
 			$table->string('remember_token', 100)->nullable();
 			$table->timestamps();

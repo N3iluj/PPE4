@@ -1,51 +1,49 @@
 @extends('template')
-
-<a href={{asset('user/create')}} style="color: white;"><div class="alert alert-dismissable alert-info" style="border-radius: 0px;">
-  <h4 style="text-align: center; text-transform: uppercase;">Inscriptions exposants - Dole 2015</h4>
-  <p style="text-align: center;"> Pour vous inscrire, cliquez sur la bannière .</p>
-</div></a>
-
 @section('contenu')
 @parent
 
 <div class="row">
-  <div class="col-lg-4">
-  </div>
-  <div class="col-lg-4">
-    <div class="well bs-component">
-      {{Form::open(array('url' => 'auth/login', 'method' => 'POST','class'=>'form-horizontal'))}}
-        <fieldset>
-          <legend>Connexion</legend>
-          <div class="form-group">
-            <div class="col-md6-offset-3">
-              {{ Form::text('username', null, array('class' => 'form-control', 'placeholder'=>'Pseudo')) }}
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-md6-offset-3">
-              {{ Form::password ('password', array('class' => 'form-control', 'placeholder'=>'Mot de passe')) }}
-            </div>
-          </div>
-          <div class="form-group">
-            <div style="text-align: center;">
-              {{ Form::submit('Envoyer', array('class'=>'btn btn-primary')) }}
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-md6-offset-3" style="text-align: center;">
-              {{HTML::link('user/create', 'Pas encore inscrit?', array('style'=>'color: #158cba'))}}
-            </div>
-            <div class="col-md6-offset-3" style="text-align: center;">
-              {{HTML::link('mdpOublie', 'Mot de passe oublié?', array('style'=>'color: #158cba'))}}
-            </div>
-          </div>
-        </fieldset>
-      {{Form::close()}}
-    </div>
-    <br \>
-    <div class="imgLego" style="text-align: center;">
-      {{ HTML::image('img/login_lego.jpg', $alt="Lego®", $attributes = array()) }}
-    </div>
-  </div>
+    <div class="well bs-component"><br \><br \>
+      {{Form::open(array('url' => 'auth/login', 'method' => 'POST','class'=>'form-horizontal'))}} 
+      <fieldset> 
 
+        <legend> Exposition Lego® - Dole 2015 </legend><br \><br \><br \><br \>
+
+          <div id="user" class="form-group">
+            <div class="col-md-4"></div>  
+            <div class="col-md-4">
+            {{ Form::text('user', null, array('class' => 'form-control', 'placeholder'=>"Pseudo ou adresse email", 'onblur'=>'verifUser(this)')) }}
+            </div>
+            <div class="col-md-4"></div>  
+          </div>
+
+           <div id="pass" class="form-group">
+            <div class="col-md-4"></div>  
+            <div class="col-md-4">
+            {{ Form::password ('password', array('class' => 'form-control', 'placeholder'=>'Mot de passe','onblur'=>'VerifPass(this)')) }}
+            </div>
+            <div class="col-md-4"></div>  
+          </div><br \><br \><br \>
+
+          <div class="form-group">
+            <div class="col-md-4"></div>
+            <div class="col-md-4" style="text-align: center;">
+              {{ Form::submit('Envoyer', array('class'=>'btn btn-primary')) }}
+              {{Form::close()}} 
+            </div>
+            <div class="col-md-4"></div>
+          </div><br \>
+
+          <div class="form-group">
+              <p style="text-align: center;">{{HTML::link('user/create', "Inscription", array('style'=>'color: #158cba'))}}</p>
+              <p style="text-align: center;">{{HTML::link('mdpOublie', 'Mot de passe oublié?', array('style'=>'color: #158cba'))}}</p>
+          </div><br \><br \>
+
+        </fieldset>
+    </div>
+</div>
+
+    <!-- <div class="imgLego" style="text-align: center;">
+      {{ HTML::image('img/login_lego.jpg', $alt="Lego®", $attributes = array()) }}
+    </div> -->
 @stop

@@ -3,71 +3,87 @@
 @parent
 
 
-{{HTML::style('css/datepicker.css')}}
-{{HTML::script('js/jquery-2.1.1.min.js') }}
-{{HTML::script('js/bootstrap-datepicker/js/bootstrap-datepicker.js') }}
-
-
 
 <div class="row">
-  <div class="well bs-component">
-    {{Form::open(array('url' => 'user', 'method' => 'POST','class'=>'form-horizontal'))}}
+  <div class="col-md-12">
+  <div class="well bs-component"><br \><br \>
+    {{Form::open(array('url' => 'user', 'method' => 'POST','class'=>'form-horizontal', 'onsubmit'=>'return checkForm();'))}}
       <fieldset>
-        <legend>Inscription</legend>
-        <div id="inputPseudo" class="form-group">
-          {{ Form::label('pseudo','Pseudo', array('class'=>'col-md-2 control-label')) }}
-          <div class="col-md-10">
-            {{ Form::text('pseudo', null, array('class' => 'form-control', 'placeholder'=>'Pseudo', 'onblur'=>'verifPseudo(this)')) }}
+        <legend>Inscription</legend><span style="color: red;">*</span> : champs obligatoires<br \><br \><br \>
+
+        <div id="formMail" class="form-group">
+          <label class="col-md-2 control-label" for="mail"> Adresse mail <span style="color: red;">*</span></label>
+          <!--{{ Form::label('mail','Adresse mail *', array('class'=>'col-md-2 control-label')) }}-->
+          <div class="col-md-8">
+            {{ Form::email('mail', null, array('id'=>'mail', 'class' => 'form-control', 'placeholder'=>'Adresse mail', 'onblur'=>'checkForm().checkMail()')) }}
           </div>
         </div>
-        <div id="inputNom" class="form-group">
-          {{ Form::label('nom','Nom', array('class'=>'col-md-2 control-label')) }}
-          <div class="col-md-10">
-            {{ Form::text('nom', null, array('class' => 'form-control', 'placeholder'=>'Nom','onblur'=>'verifNom(this)')) }}
+
+
+        <div id="formPass" class="form-group">
+
+          <label class="col-md-2 control-label" for="pass1">Mot de passe <span style="color: red;">*</span></label>
+          <div class="col-md-3">
+            {{ Form::password('pass1', array('id' => 'pass1', 'class' => 'form-control',  'title'=>'Le mot de passe doit contenir au moins 8 caractères', 'placeholder'=>'Mot de passe', 'onblur'=>'checkForm().checkPass1()')) }}
           </div>
-        </div>
-        <div id="inputPrenom" class="form-group">
-          {{ Form::label('prenom','Prenom', array('class'=>'col-md-2 control-label')) }}
-          <div class="col-md-10">
-            {{ Form::text('prenom', null, array('class' => 'form-control', 'placeholder'=>'Prenom', 'onblur'=>'verifPrenom(this)')) }}
+
+          <label id="labelPass2" class="col-md-2 control-label" for="pass2">Retapez le mot de passe <span style="color: red;">*</span></label>
+          <div class="col-md-3">
+            {{ Form::password ('pass2', array('id' => 'pass2', 'class' => 'form-control', 'title'=>'Les mots de passe doivent correspondre', 'placeholder'=>'Retapez votre mot de passe', 'onblur'=>'checkForm().check2Pass()')) }}
           </div>
+
         </div>
-        <div id="inputDate" class="form-group">
+
+
+        <div id="formNom" class="form-group">
+
+          <label id="labelNom" class="col-md-2 control-label" for="nom">Nom <span style="color: red;">*</span></label>
+          <!-- {{ Form::label('nom','Nom *', array('class'=>'col-md-2 control-label')) }} -->
+          <div class="col-md-3">
+            {{ Form::text('nom', null, array('id'=>'nom', 'class' => 'form-control', 'placeholder'=>'Nom', 'onblur'=>'checkForm().checkNom()')) }}
+          </div>
+
+          <label id="labelPrenom" class="col-md-2 control-label" for="prenom">Prénom <span style="color: red;">*</span></label>
+          <!--{{ Form::label('prenom','Prenom *', array('class'=>'col-md-2 control-label')) }}-->
+          <div class="col-md-3">
+            {{ Form::text('prenom', null, array('id'=>'prenom', 'class' => 'form-control', 'placeholder'=>'Prénom', 'onblur'=>'checkForm().checkPrenom()')) }}
+          </div>
+
+        </div>
+
+
+        <div class="form-group">
+
           {{ Form::label('dateNaissance','Date de naissance', array('class'=>'col-md-2 control-label')) }}
-          <div class="col-md-10">
-            {{ Form::text('dateNaissance', null, array('class' => 'form-control', 'id'=>'datepicker', 'placeholder'=>'Ecrivez votre date de naissance au format : 01/01/2001', 'onblur'=>'verifDate(this)')) }}
+          <div class="col-md-2">
+            {{ Form::number('dateJ', 1, array('class'=>'form-control')) }}
           </div>
+
+           <div class="col-md-3">
+            {{ Form::select('dateM', array(1 => 'Janvier', 2 => 'Février', 3 => 'Mars', 4 => 'Avril', 5 => 'Mai', 6 => 'Juin', 7 => 'Juillet', 8 => 'Août', 9 => 'Septembre', 10 => 'Octobre', 11 => 'Novembre', 12 => 'Décembre', ), null, array('class'=>'form-control')) }}
+          </div>
+
+          <div class="col-md-3">
+            {{ Form::number('dateA', 2000, array('class'=>'form-control')) }}
+          </div>
+
         </div>
 
-         <!-- DEBUT SCRIPT DATEPICKER -->
 
-        <script>
 
-          $('#datepicker').datepicker({
-            format: 'dd/mm/yyyy',
-            autoclose: true,
-            orientation: 'top',
-          });
+        <div id="formStatut" class="form-group">
 
-        </script>
-        
-          <!-- FIN SCRIPT DATEPICKER -->
-
-        <div class="form-group">
-          {{ Form::label('adresse','Adresse', array('class'=>'col-md-2 control-label')) }}
+          <label class="col-md-2 control-label" for="statut">Vous êtes? <span style="color: red;">*</span></label>
+          <!-- {{ Form::label('statut',"Vous êtes? *", array('class'=>'col-lg-2 control-label')) }} -->
           <div class="col-md-10">
-            {{ Form::text('adresse', null, array('class' => 'form-control', 'placeholder'=>'Adresse')) }}
-          </div>
-        </div>
-        <div class="form-group">
-          {{ Form::label('statut',"Vous êtes?", array('class'=>'col-lg-2 control-label')) }}
-          <div class="col-md-10">
+
             <div class="radio">
               <label>
-                <input type="radio" name="statut" id="statut" value="exposant" checked="">
+                <input type="radio" name="statut" id="statut" value="exposant" checked=''>
                 Exposant
               </label>
             </div>
+
             <div class="radio">
               <label>
                 <input type="radio" name="statut" id="statut" value="vendeur">
@@ -75,128 +91,240 @@
               </label>
             </div>
           </div>
+
         </div>
+
+
+
         <div class="form-group">
+
+          {{ Form::label('adresse','Adresse', array('class'=>'col-md-2 control-label')) }}
+          <div class="col-md-3">
+            {{ Form::text('adresse', null, array('class' => 'form-control', 'placeholder'=>'Adresse')) }}
+          </div>
+
           {{ Form::label('cp','Code Postal', array('class'=>'col-md-2 control-label')) }}
-          <div class="col-md-10">
+          <div class="col-md-3">
             {{ Form::text('cp', null, array('class' => 'form-control', 'placeholder'=>'Code Postal')) }}
           </div>
+
         </div>
+
+
         <div class="form-group">
           {{ Form::label('ville','Ville', array('class'=>'col-md-2 control-label')) }}
-          <div class="col-md-10">
+          <div class="col-md-8">
             {{ Form::text('ville', null, array('class' => 'form-control', 'placeholder'=>'Ville')) }}
           </div>
         </div>
-        <div class="form-group">
+
+        <div id="formTel" class="form-group">
           {{ Form::label('tel','Téléphone', array('class'=>'col-md-2 control-label')) }}
-          <div class="col-md-10">
-            {{ Form::text('tel', null, array('class' => 'form-control', 'placeholder'=>'Numero de téléphone')) }}
+          <div class="col-md-8">
+            {{ Form::text('tel', null, array('id'=>'tel', 'class' => 'form-control', 'placeholder'=>'Numero de téléphone')) }}
           </div>
         </div>
-        <div class="form-group">
-          {{ Form::label('email','Email', array('class'=>'col-md-2 control-label')) }}
-          <div class="col-md-10">
-            {{ Form::email('email', null, array('class' => 'form-control', 'placeholder'=>'Email')) }}
-          </div>
-        </div>
-        <div class="form-group">
-          {{ Form::label('password','Mot de passe', array('class'=>'col-md-2 control-label')) }}
-          <div class="col-md-10">
-            {{ Form::password('password', array('class' => 'form-control', 'placeholder'=>'Mot de passe')) }}
-          </div>
-        </div>
-        <div class="form-group">
-          {{ Form::label('mdp2','Retapez votre mot de passe', array('class'=>'col-md-2 control-label')) }}
-          <div class="col-md-10">
-            {{ Form::password ('mdp2', array('class' => 'form-control', 'placeholder'=>'Retapez votre mot de passe')) }}
-          </div>
-        </div>
+
+
         <div class="form-group">
           <div style="text-align: center;">
-            <input type="checkbox"> J'accepte les <div id ="javascript"><p> conditions générales d'utilisation.</p> </div>
+            <div class="checkbox">
+              <label>
+                {{Form::checkbox('cgu', 'value', false, array('id'=>'cgu', 'onchange'=>'checkForm().checkCgu()'))}} J'accepte les {{HTML::link('cgu', "Conditions Générales d'Utilisation")}}.
+              </label>
+            </div>
           </div>
-        </div>
+        </div> <br \>
+
         <div class="form-group">
-          <div class="col-md-4"></div>
-          <div class="col-md-4"></div>
-          <div class="col-md-4">
-            {{Form::submit('Suivant', array('class'=>'btn btn-primary'))}}
+          <div style="text-align: center;">
+            {{Form::submit('Suivant', array('class'=>'btn btn-primary', 'id'=>'submit'))}}
             {{Form::close()}}
           </div>
-        </div>
+        </div> <br \><br \>
+
       </fieldset>
-    </form>
+    </div>      
   </div>
-</div>
+
+
 
 <script>
 
-function verifPseudo(champ)
-{
-   if(champ.value.length < 3 || champ.value.length > 25)
-   {
-    document.getElementById("inputPseudo").className = "form-group has-error"
-   // champ.className = "form-control has-error
-    return false;
-   }
+//DESACTIVE LE BOUTON SUBMIT (VOIR CHECKCGU FUNCTION)//
+document.getElementById("submit").disabled = true;
 
-   else
-   {
-     document.getElementById("inputPseudo").className = "form-group has-success"
+
+function checkForm() {
+
+  //VERIFICATION ADRESSE EMAIL
+
+  function checkMail() {
+        
+    var mail = document.getElementById('mail').value;
+
+    var regEmail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$','i');
+            
+    if(regEmail.test(mail)) {
+
+      document.getElementById("formMail").className = "form-group"
+            
       return true;
-   }
+
+    } else {
+
+      document.getElementById("formMail").className = "form-group has-error"
+            
+      return false;
+    
+    }
+
+  };
+
+  //VERIFICATION VALIDITE MOT DE PASSE 1
+
+  function checkPass1() {
+
+    var pass = document.getElementById('pass1').value;
+
+    var regPass = new RegExp('^[0-9A-Za-z._-]{8,}$','i');
+
+    if(regPass.test(pass))
+    {
+      document.getElementById("formPass").className = "form-group"
+
+      return true;
+    }
+    else
+    {
+
+      document.getElementById("formPass").className = "form-group has-error"
+
+      return false;
+
+    }
+  };
+
+  //VERIFICATION CORRESPONDANCE MOT DE PASSE
+
+  function check2Pass() {
+
+    var x = document.getElementById("pass1").value;
+    var y = document.getElementById("pass2").value;
+
+    if (x == y)
+    {
+      document.getElementById("labelPass2").style.color = "black"
+    
+      return true;
+    }
+    else
+    {
+      document.getElementById("labelPass2").style.color = "red"
+    
+      return false;
+
+    }
+  };
+
+  //VERIFICATION VALIDITE NOM
+
+  function checkNom()
+  {
+    var nom = document.getElementById("nom").value;
+    var regNom = new RegExp('[a-zA-Z]{1,20}$','i'); 
+
+    if(regNom.test(nom))
+    {
+
+      document.getElementById("labelNom").style.color = "black"
+
+      return true;
+   
+    }
+
+    else
+     {
+
+      document.getElementById("labelNom").style.color = "red"
+
+      return false;
+
+    }
+  };
+
+  //VERIFICATION VALIDITE PRENOM
+
+  function checkPrenom()
+  {
+    var prenom = document.getElementById("prenom").value;
+    var regPrenom = new RegExp('[a-zA-Z]{1,20}$','i'); 
+
+    if(regPrenom.test(prenom))
+    {
+
+      document.getElementById("labelPrenom").style.color = "black"
+
+      return true;
+   
+    }
+
+    else
+     {
+
+      document.getElementById("labelPrenom").style.color = "red"
+
+      return false;
+
+    }
+  };
+
+
+  //VERIFICATION CGU COCHE
+
+  function checkCgu() {
+
+    var cgu = document.getElementById("cgu").checked;
+
+    if (cgu == true)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
+  };
+
+
+  //DEBUT FONCTION CHECKFORM
+
+
+  if (checkCgu() == true)
+  {
+    document.getElementById("submit").disabled = false;
+  }
+  else
+  {
+    document.getElementById("submit").disabled = true;
+  }
+
+
+
+  if (checkMail() == true && checkPass1() == true && check2Pass() == true && checkNom() == true && checkPrenom() == true)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+
 }
 
-function verifNom(champ)
-{
-   if(champ.value.length < 3 || champ.value.length > 25)
-   {
-    document.getElementById("inputNom").className = "form-group has-error"
-   // champ.className = "form-control has-error
-    return false;
-   }
 
-   else
-   {
-     document.getElementById("inputNom").className = "form-group has-success"
-      return true;
-   }
-}
-
-function verifPrenom(champ)
-{
-   if(champ.value.length < 3 || champ.value.length > 25)
-   {
-    document.getElementById("inputPrenom").className = "form-group has-error"
-   // champ.className = "form-control has-error
-    return false;
-   }
-
-   else
-   {
-     document.getElementById("inputPrenom").className = "form-group has-success"
-      return true;
-   }
-}
-
-function verifDate(champ)
-{
-   if(champ.value.length < 3 || champ.value.length > 25)
-   {
-    document.getElementById("inputDate").className = "form-group has-error"
-   // champ.className = "form-control has-error
-    return false;
-   }
-
-   else
-   {
-     document.getElementById("inputDate").className = "form-group has-success"
-      return true;
-   }
-}
 
 </script>
-
 
 @stop

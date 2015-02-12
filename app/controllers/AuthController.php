@@ -28,12 +28,12 @@ class AuthController extends BaseController {
 	*/
 	public function postLogin()
 	{
-		$user = array('username' => Input::get('username'), 'password' => Input::get('password'));
+		$user = array('username' => Input::get('user'), 'password' => Input::get('password'));
 		if (Auth::attempt($user)) {
 		  return Redirect::intended('hello')
 			->with(Session::flash('success', 'Vous êtes connecté') . Auth::user()->username);
 		}
-		return Redirect::to('auth/login')->with(Session::flash('success', 'Login ou mot de passe incorrect'))->withInput();  
+		return Redirect::to('auth/login')->with(Session::flash('fail', 'Login ou mot de passe incorrect'))->withInput();  
 	}
 
    
