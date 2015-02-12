@@ -15,7 +15,7 @@
           <label class="col-md-2 control-label" for="mail"> Adresse mail <span style="color: red;">*</span></label>
           <!--{{ Form::label('mail','Adresse mail *', array('class'=>'col-md-2 control-label')) }}-->
           <div class="col-md-8">
-            {{ Form::email('mail', null, array('id'=>'mail', 'class' => 'form-control', 'placeholder'=>'Adresse mail', 'onblur'=>'checkForm().checkMail()')) }}
+            {{ Form::email('mail', null, array('id'=>'mail', 'class' => 'form-control', 'placeholder'=>'Adresse mail', 'onblur'=>'checkMail()')) }}
           </div>
         </div>
 
@@ -24,12 +24,12 @@
 
           <label class="col-md-2 control-label" for="pass1">Mot de passe <span style="color: red;">*</span></label>
           <div class="col-md-3">
-            {{ Form::password('pass1', array('id' => 'pass1', 'class' => 'form-control',  'title'=>'Le mot de passe doit contenir au moins 8 caractères', 'placeholder'=>'Mot de passe', 'onblur'=>'checkForm().checkPass1()')) }}
+            {{ Form::password('pass1', array('id' => 'pass1', 'class' => 'form-control',  'title'=>'Le mot de passe doit contenir au moins 8 caractères', 'placeholder'=>'Mot de passe', 'onkeydown'=>'checkPass1()')) }}
           </div>
 
           <label id="labelPass2" class="col-md-2 control-label" for="pass2">Retapez le mot de passe <span style="color: red;">*</span></label>
           <div class="col-md-3">
-            {{ Form::password ('pass2', array('id' => 'pass2', 'class' => 'form-control', 'title'=>'Les mots de passe doivent correspondre', 'placeholder'=>'Retapez votre mot de passe', 'onblur'=>'checkForm().check2Pass()')) }}
+            {{ Form::password ('pass2', array('id' => 'pass2', 'class' => 'form-control', 'title'=>'Les mots de passe doivent correspondre', 'placeholder'=>'Retapez votre mot de passe', 'onkeydown'=>'check2Pass()')) }}
           </div>
 
         </div>
@@ -40,13 +40,13 @@
           <label id="labelNom" class="col-md-2 control-label" for="nom">Nom <span style="color: red;">*</span></label>
           <!-- {{ Form::label('nom','Nom *', array('class'=>'col-md-2 control-label')) }} -->
           <div class="col-md-3">
-            {{ Form::text('nom', null, array('id'=>'nom', 'class' => 'form-control', 'placeholder'=>'Nom', 'onblur'=>'checkForm().checkNom()')) }}
+            {{ Form::text('nom', null, array('id'=>'nom', 'class' => 'form-control', 'placeholder'=>'Nom', 'onkeydown'=>'checkNom()')) }}
           </div>
 
           <label id="labelPrenom" class="col-md-2 control-label" for="prenom">Prénom <span style="color: red;">*</span></label>
           <!--{{ Form::label('prenom','Prenom *', array('class'=>'col-md-2 control-label')) }}-->
           <div class="col-md-3">
-            {{ Form::text('prenom', null, array('id'=>'prenom', 'class' => 'form-control', 'placeholder'=>'Prénom', 'onblur'=>'checkForm().checkPrenom()')) }}
+            {{ Form::text('prenom', null, array('id'=>'prenom', 'class' => 'form-control', 'placeholder'=>'Prénom', 'onkeydown'=>'checkPrenom()')) }}
           </div>
 
         </div>
@@ -130,7 +130,7 @@
           <div style="text-align: center;">
             <div class="checkbox">
               <label>
-                {{Form::checkbox('cgu', 'value', false, array('id'=>'cgu', 'onchange'=>'checkForm().checkCgu()'))}} J'accepte les {{HTML::link('cgu', "Conditions Générales d'Utilisation")}}.
+                {{Form::checkbox('cgu', 'value', false, array('id'=>'cgu', 'onchange'=>'checkCgu()'))}} J'accepte les {{HTML::link('cgu', "Conditions Générales d'Utilisation")}}.
               </label>
             </div>
           </div>
@@ -152,10 +152,10 @@
 <script>
 
 //DESACTIVE LE BOUTON SUBMIT (VOIR CHECKCGU FUNCTION)//
-document.getElementById("submit").disabled = true;
 
 
-function checkForm() {
+
+
 
   //VERIFICATION ADRESSE EMAIL
 
@@ -179,7 +179,7 @@ function checkForm() {
     
     }
 
-  };
+  }
 
   //VERIFICATION VALIDITE MOT DE PASSE 1
 
@@ -203,7 +203,7 @@ function checkForm() {
       return false;
 
     }
-  };
+  }
 
   //VERIFICATION CORRESPONDANCE MOT DE PASSE
 
@@ -225,7 +225,7 @@ function checkForm() {
       return false;
 
     }
-  };
+  }
 
   //VERIFICATION VALIDITE NOM
 
@@ -251,7 +251,7 @@ function checkForm() {
       return false;
 
     }
-  };
+  }
 
   //VERIFICATION VALIDITE PRENOM
 
@@ -277,7 +277,7 @@ function checkForm() {
       return false;
 
     }
-  };
+  }
 
 
   //VERIFICATION CGU COCHE
@@ -295,22 +295,14 @@ function checkForm() {
       return false;
     }
 
-  };
+  }
 
 
   //DEBUT FONCTION CHECKFORM
 
 
-  if (checkCgu() == true)
-  {
-    document.getElementById("submit").disabled = false;
-  }
-  else
-  {
-    document.getElementById("submit").disabled = true;
-  }
 
-
+function checkForm() {
 
   if (checkMail() == true && checkPass1() == true && check2Pass() == true && checkNom() == true && checkPrenom() == true)
   {
