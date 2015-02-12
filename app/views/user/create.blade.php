@@ -154,7 +154,7 @@
 //DESACTIVE LE BOUTON SUBMIT (VOIR CHECKCGU FUNCTION)//
 
 
-
+  document.getElementById('submit').disabled = true;
 
 
   //VERIFICATION ADRESSE EMAIL
@@ -288,10 +288,13 @@
 
     if (cgu == true)
     {
+      document.getElementById('submit').disabled = false;
       return true;
     }
     else
+
     {
+      document.getElementById('submit').disabled = true;
       return false;
     }
 
