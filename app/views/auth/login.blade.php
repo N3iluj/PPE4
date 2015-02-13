@@ -9,21 +9,27 @@
 
         <legend> Exposition Lego® - Dole 2015 </legend><br \><br \><br \><br \>
 
+        <!-- INPUT USER -->
+
           <div id="user" class="form-group">
             <div class="col-md-4"></div>  
             <div class="col-md-4">
-            {{ Form::text('user', null, array('class' => 'form-control', 'placeholder'=>"Pseudo ou adresse email", 'onblur'=>'verifUser(this)')) }}
+            {{ Form::text('user', null, array('class' => 'form-control', 'placeholder'=>'Adresse e-mail ou pseudo')) }}
             </div>
             <div class="col-md-4"></div>  
           </div>
 
+          <!-- INPUT PASSWORD -->
+
            <div id="pass" class="form-group">
             <div class="col-md-4"></div>  
             <div class="col-md-4">
-            {{ Form::password ('password', array('class' => 'form-control', 'placeholder'=>'Mot de passe','onblur'=>'VerifPass(this)')) }}
+            {{ Form::password ('password', array('class' => 'form-control', 'placeholder'=>'Mot de passe')) }}
             </div>
             <div class="col-md-4"></div>  
           </div><br \><br \><br \>
+
+          <!-- BOUTON SUBMIT -->
 
           <div class="form-group">
             <div class="col-md-4"></div>
@@ -34,16 +40,16 @@
             <div class="col-md-4"></div>
           </div><br \>
 
+          <!-- LIENS INSCRIPTION ET MOT DE PASSE OUBLIE -->
+
           <div class="form-group">
               <p style="text-align: center;">{{HTML::link('user/create', "Inscription", array('style'=>'color: #158cba'))}}</p>
-              <p style="text-align: center;">{{HTML::link('mdpOublie', 'Mot de passe oublié?', array('style'=>'color: #158cba'))}}</p>
+              <p style="text-align: center;">{{HTML::link('password/remind', 'Mot de passe oublié?', array('style'=>'color: #158cba'))}}</p>
           </div><br \><br \>
 
         </fieldset>
     </div>
 </div>
 
-    <!-- <div class="imgLego" style="text-align: center;">
-      {{ HTML::image('img/login_lego.jpg', $alt="Lego®", $attributes = array()) }}
-    </div> -->
+
 @stop

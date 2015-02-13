@@ -1,12 +1,14 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="utf-8">
     <title>Manifestation Lego®</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Poncet Medhy, Charles Geoffrey, Einhart Guillaume et Julien Card">
+
+    <!-- IMPORT DES STYLES CSS -->
 
 	  {{HTML::style('css/bootstrap.min.css')}}
     {{HTML::style('css/bootstrap-responsive.min.css')}}
@@ -18,17 +20,24 @@
 
     <!-- Fav and touch icons -->
 
+    <link rel="shortcut icon" href="{{{ asset('favicon.ico') }}}">
+
+
   </head>
+
   <body style="padding-top: 60px;">
+
       <div class="container">
     <!--    <h1>Bootstrap starter template</h1>
     <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>-->
+
+      <!-- RETOUR MESSAGE D'ERREUR -->
 
        @if ($errors->count() > 0)
 
           @foreach ($errors -> all() as $message)
 
-          <div class="alert alert-error">
+          <div class="alert alert-danger">
 
             {{ $message }} <br />
 
@@ -39,6 +48,7 @@
         @endif
 
 
+        <!-- RETOUR MESSAGE SESSION FLASH FAIL -->
 
         @if (Session::has('fail'))
 
@@ -49,6 +59,9 @@
           </div>
 
         @endif
+
+
+        <!-- RETOUR MESSAGE SESSION FLASH SUCCESS -->
 
 
         @if (Session::has('success'))
@@ -62,6 +75,7 @@
         @endif
 
 
+        <!-- RETOUR MESSAGE SESSION FLASH INFO -->
 
         @if (Session::has('info'))
 
@@ -74,10 +88,21 @@
         @endif
 
 
+
+
         @section('contenu')
+
+        <!-- AFFICHAGE DE LA VIEW SI section('contenu') DEDANS -->
+
         @show
 
+        <!-- FIN DE LA VIEW -->
+
+
         </div> <!-- /container -->    
+
+
+
 
     <!-- Le javascript
     ================================================== -->
@@ -88,6 +113,7 @@
 
       @section('script')
       @show
+      
 
   </body>
 

@@ -12,12 +12,24 @@
 */
 
 
+// ROUTES DE LOGIN ET DE CONNEXION UTILISATEUR
 
 Route::controller('auth', 'AuthController');
 Route::get('/', 'AuthController@getLogin');
 
+
+
+//ROUTE REMINDER (OUBLI DE MOT DE PASSE)
+
+Route::controller('password', 'RemindersController');
+
+
+
+//ROUTES USERCONTROLLER + FONCTIONS FORGOT (MOT DE PASSE OUBLIE)
+
 Route::resource('user', 'UserController');
-Route::get('mdpOublie', 'UserController@mdpOublie');
+Route::get('getForgot', 'UserController@getForgot');
+Route::post('postForgot', 'UserController@postForgot');
 
 
 Route::resource('exposition', 'ExpositionController');
@@ -31,12 +43,16 @@ Route::resource('projet', 'ProjetController');
 
 Route::resource('hebergement', 'HebergementController');
 
+
+//ROUTE RENVOYE PAR AUTH/LOGIN (FUTUR BACK OFFICE)
+
 Route::get('hello', function()
 {
 	echo "lol";
 }
 );
 
+//ROUTE PAGE 404 SI INCONNUE
 
 App::missing(function(){
 	return View::make('404');

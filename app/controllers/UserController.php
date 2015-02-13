@@ -2,6 +2,13 @@
 
 class UserController extends \BaseController {
 
+	public function __construct()
+  {
+  		$this->beforeFilter('auth', array('only' => 'getLogout'));
+	//	$this->beforeFilter('guest', array('except' => 'getLogout'));
+		$this->beforeFilter('csrf', array('on' => 'post'));
+  }
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -31,61 +38,146 @@ class UserController extends \BaseController {
 	 */
 	public function store()
 	{
-		/*
-		$mail = Input::get('mail');
-		$regMail = '^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$';
-		preg_match($regMail, $mail, $res);
-
-		/*
-		$rules = array('nom' => 'required|max:50|min:3','prenom' => 'required|max:50|min:3','adresse' => 'required|max:100|min:3','ville' => 'required|max:50|min:3', 'tel' => 'required|max:10|min:10','email' => 'required|max:50|min:3','pseudo' => 'required|max:50|min:3','password' => 'required|max:50|min:3','mdp2' => 'required|max:50|min:3');
+		
+		$rules = array('pseudo' => 'max:50|min:1', 'nom' => 'required|max:50|min:1','prenom' => 'required|max:50|min:1', 'dateJ'=>'alpha_num', 'dateA'=>'alpha_num', 'adresse' => 'max:100|min:3','ville' => 'max:50|min:3', 'tel' => 'max:30|min:10','mail' => 'required|email', 'pass1' => 'required|max:50|min:8','pass2' => 'required|max:50|min:8', 'cgu' => 'required');	
 		$validation=Validator::make(Input::all(),$rules);
+		
+
   		if ($validation->fails())
   		{
-  			Session::flash('fail', 'Certain(s) champs sont incorrect');
+  			Session::flash('fail', $validation);
    			return Redirect::to('user/create')->withInput();
   		} 
 
   		else
-  		{*//*
+  		{
+
+  			//INSTANCIATION DE L'UTILISATEUR
+
+
 			$user = new User;
 
-			if ((isset($mail)) && preg_match($regMail, $mail))
+
+			//GENERATION PSEUDO ALEATOIRE POUR PERMETTRE L AUTHENTIFICATION 
+			//AVEC ADRESSE EMAIL OU PSEUDO (CF AUTHCONTROLLER FONCTION POSTLOGIN)
+
+			$pseudo = Input::get('pseudo');
+			if (empty($peudo)) 
 			{
-				$user-> username=Input::get('mail');
-				echo $user -> unsername;
+				$chaine = "abcdefghijklmnpqrstuvwxy";
+				$car = 10;
+				srand((double)microtime()*1000000);
+				for($i=0; $i<$car; $i++) 
+				{
+					$pseudo .= $chaine[rand()%strlen($chaine)];
+				}
 			}
 
+
+		
+
+			//VERIFIE SI ADRESSE EMAIL DEJA UTILISE
+
+			$mail = Input::get('mail');
+			$res = DB::table('users')->where('email', $mail)->first();
+			if (empty($res)) 
+			{
+				$user -> email = $mail;
+			}
 			else
 			{
-				Session::flash('fail', 'Adresse mail incorrecte');
-   				return Redirect::to('user/create')->withInput();
-			} 
-			/*
-				$user-> nom=Input::get('nom');
-				$user-> prenom=Input::get('prenom');
-				$user-> date_naissance=Input::get('dateNaissance');
-				$user-> statut=Input::get('statut');
-				$user-> adresse=Input::get('adresse');
-				$user-> cp=Input::get('cp');
-				$user-> ville=Input::get('ville');
-				$user-> tel=Input::get('tel'); */ /*
-			
-			if(Input::get('password')==Input::get('mdp2')){
-				$user-> password= Hash::make(Input::get('password'));
-			}
-			else {
-				Session::flash('fail', 'Mots de passe différents');
-				return Redirect::back()->withInput(); 
+				Session::flash('fail', 'Adresse e-mail déjà utilisée');
+   				return Redirect::to('user/create')->withInput(Input::except('mail'));					
 			}
 
-			if($user->save()){
+
+
+			//VERIFIE SI PSEUDO DEJA UTILISE
+
+			$res = DB::table('users')->where('username', $pseudo)->first();
+			if (empty($res)) 
+			{
+				$user -> username = $pseudo;
+			}
+			else
+			{
+				Session::flash('fail', 'Pseudo déjà utilisé');
+   				return Redirect::to('user/create')->withInput(Input::except('pseudo'));					
+			}
+
+
+
+			//VERIFICATION CORRESPONDANCE DES PASS
+			
+			if(Input::get('pass1')==Input::get('pass2'))
+			{
+				$user-> password= Hash::make(Input::get('pass1'));
+			}
+			else 
+			{
+				Session::flash('fail', 'Les mots de passe ne correspondent pas');
+				return Redirect::to('user/create')->withInput(Input::except('cgu'));
+			}
+
+
+
+			//VERIFIE SI CGU ACCEPTE
+
+			$cgu = Input::get('cgu');
+			if ($cgu == 1) 
+			{
+				$user -> cgu = $cgu;
+			}
+			else
+			{
+				Session::flash('fail', "Veuillez accepeter les Conditions Générales d'Utilisation");
+   				return Redirect::to('user/create')->withInput(Input::except('cgu'));					
+			}
+
+
+
+			//VERIFIE SI TEL DEJA UTILISE
+
+			$tel = Input::get('tel');
+			$res = DB::table('users')->where('tel', $tel)->first();
+			if (empty($res)) 
+			{
+				$user -> tel = $tel;
+			}
+			else
+			{
+				Session::flash('fail', 'Numéro de téléphone déjà utilisé');
+   				return Redirect::to('user/create')->withInput(Input::except('tel'));					
+			}
+
+
+
+			//FORMATAGE DE LA DATE DE NAISSANCE
+
+			$date = Input::get('dateA') .'-'. Input::get('dateM') . '-' . Input::get('dateJ');
+			$user -> date_naissance = $date;
+
+
+
+			$user-> nom=Input::get('nom');
+			$user-> prenom=Input::get('prenom');
+			$user-> statut=Input::get('statut');
+			$user-> adresse=Input::get('adresse');
+			$user-> cp=Input::get('cp');
+			$user-> ville=Input::get('ville');
+			$user-> cgu=Input::get('cgu'); 
+
+
+			//INSERTION EN BASE
+
+			if($user->save())
+			{
 				return Redirect::to('projet/create');
 			}
 		
-		}
-
-		return Redirect::to('projet/create');*/
+		} 
 	}
+
 
 
 	/**
@@ -134,16 +226,6 @@ class UserController extends \BaseController {
 	{
 		//
 	}
-
-	public function mdpOublie()
-	{
-		echo 'lol';
-	}
-        public function getcg()
-        {
-            $lescgs=cg::all();
-  return View::make('user/create')->with('lescgs',$lescgs);
-        }
 
 
 }

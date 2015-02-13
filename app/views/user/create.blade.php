@@ -11,28 +11,41 @@
       <fieldset>
         <legend>Inscription</legend><span style="color: red;">*</span> : champs obligatoires<br \><br \><br \>
 
+
+        <!-- INPUT MAIL ET PSEUDO -->
+
+
         <div id="formMail" class="form-group">
-          <label class="col-md-2 control-label" for="mail"> Adresse mail <span style="color: red;">*</span></label>
-          <!--{{ Form::label('mail','Adresse mail *', array('class'=>'col-md-2 control-label')) }}-->
-          <div class="col-md-8">
-            {{ Form::email('mail', null, array('id'=>'mail', 'class' => 'form-control', 'placeholder'=>'Adresse mail', 'onblur'=>'checkMail()')) }}
+          <label id="labelMail" class="col-md-2 control-label" for="mail"> Adresse e-mail <span style="color: red;">*</span></label>
+          <div class="col-md-3">
+            {{ Form::email('mail', null, array('id'=>'mail', 'class' => 'form-control', 'placeholder'=>'Adresse e-mail', 'onblur'=>'checkMail()', 'data-toggle'=>'mail')) }}
+          </div>
+
+          <label id="labelPseudo" class="col-md-2 control-label" for="pseudo">Pseudo </label>
+          <div class="col-md-3">
+            {{ Form::text('pseudo', null, array('id'=>'pseudo', 'class' => 'form-control', 'title'=>'Le pseudo doit être inférieur à 20 caractères, contenir plus de 2 lettres et moins de 4 chiffres', 'placeholder'=>'Pseudo', 'onblur'=>'checkPseudo()', 'data-toggle'=>'pseudo')) }}
           </div>
         </div>
+
+
+        <!-- INPUT COMPARAISON PASS -->
 
 
         <div id="formPass" class="form-group">
 
           <label class="col-md-2 control-label" for="pass1">Mot de passe <span style="color: red;">*</span></label>
           <div class="col-md-3">
-            {{ Form::password('pass1', array('id' => 'pass1', 'class' => 'form-control',  'title'=>'Le mot de passe doit contenir au moins 8 caractères', 'placeholder'=>'Mot de passe', 'onkeydown'=>'checkPass1()')) }}
+            {{ Form::password('pass1', array('id' => 'pass1', 'class' => 'form-control',  'title'=>'Le mot de passe doit contenir au moins 8 caractères', 'placeholder'=>'Mot de passe', 'onkeydown'=>'checkPass1()', 'data-toggle'=>'pass1')) }}
           </div>
 
-          <label id="labelPass2" class="col-md-2 control-label" for="pass2">Retapez le mot de passe <span style="color: red;">*</span></label>
+          <label id="labelPass2" class="col-md-2 control-label" for="pass2">Verifiez le mot de passe <span style="color: red;">*</span></label>
           <div class="col-md-3">
-            {{ Form::password ('pass2', array('id' => 'pass2', 'class' => 'form-control', 'title'=>'Les mots de passe doivent correspondre', 'placeholder'=>'Retapez votre mot de passe', 'onkeydown'=>'check2Pass()')) }}
+            {{ Form::password ('pass2', array('id' => 'pass2', 'class' => 'form-control', 'title'=>'Les mots de passe doivent correspondre', 'placeholder'=>'Confirmez votre mot de passe', 'onkeyup'=>'check2Pass()', 'data-toggle'=>'pass2')) }}
           </div>
 
         </div>
+
+
 
 
         <div id="formNom" class="form-group">
@@ -51,24 +64,29 @@
 
         </div>
 
+        <!-- INPUT DATE DE NAISSANCE -->
+
 
         <div class="form-group">
 
           {{ Form::label('dateNaissance','Date de naissance', array('class'=>'col-md-2 control-label')) }}
           <div class="col-md-2">
-            {{ Form::number('dateJ', 1, array('class'=>'form-control')) }}
+            {{ Form::number('dateJ', 1, array('class'=>'form-control', 'onfocus'=>'this.select()')) }}
           </div>
 
            <div class="col-md-3">
-            {{ Form::select('dateM', array(1 => 'Janvier', 2 => 'Février', 3 => 'Mars', 4 => 'Avril', 5 => 'Mai', 6 => 'Juin', 7 => 'Juillet', 8 => 'Août', 9 => 'Septembre', 10 => 'Octobre', 11 => 'Novembre', 12 => 'Décembre', ), null, array('class'=>'form-control')) }}
+            {{ Form::select('dateM', array('01' => 'Janvier', '02' => 'Février', '03' => 'Mars', '04' => 'Avril', '05' => 'Mai', '06' => 'Juin', '07' => 'Juillet', '08' => 'Août', '09' => 'Septembre', 10 => 'Octobre', 11 => 'Novembre', 12 => 'Décembre'), null, array('class'=>'form-control')) }}
           </div>
 
           <div class="col-md-3">
-            {{ Form::number('dateA', 2000, array('class'=>'form-control')) }}
+            {{ Form::number('dateA', 2000, array('class'=>'form-control', 'onfocus'=>'this.select()')) }}
           </div>
 
         </div>
 
+
+
+        <!-- INPUT BOUTON RADIO CHOIX STATUT EXPOSANT OU VENDEUR -->
 
 
         <div id="formStatut" class="form-group">
@@ -121,20 +139,26 @@
         <div id="formTel" class="form-group">
           {{ Form::label('tel','Téléphone', array('class'=>'col-md-2 control-label')) }}
           <div class="col-md-8">
-            {{ Form::text('tel', null, array('id'=>'tel', 'class' => 'form-control', 'placeholder'=>'Numero de téléphone')) }}
+            {{ Form::text('tel', null, array('id'=>'tel', 'class' => 'form-control', 'placeholder'=>'Numéro de téléphone')) }}
           </div>
         </div>
+
+
+        <!-- INPUT CHECK BOX CHECK ACCEPTATION CGU -->
 
 
         <div class="form-group">
           <div style="text-align: center;">
             <div class="checkbox">
-              <label>
-                {{Form::checkbox('cgu', 'value', false, array('id'=>'cgu', 'onchange'=>'checkCgu()'))}} J'accepte les {{HTML::link('cgu', "Conditions Générales d'Utilisation")}}.
+              <label id="labelCgu">
+                {{Form::checkbox('cgu', 1, false, array('id'=>'cgu', 'title'=>'Vous devez accepter les conditions pour continuer', 'onchange'=>'checkCgu()', 'data-toggle'=>'cgu'))}} J'accepte les {{HTML::link('cgu', "Conditions Générales d'Utilisation")}}.
               </label>
             </div>
           </div>
         </div> <br \>
+
+
+        <!-- INPUT CHECK BOX CHECK ACCEPTATION CGU -->
 
         <div class="form-group">
           <div style="text-align: center;">
@@ -151,11 +175,6 @@
 
 <script>
 
-//DESACTIVE LE BOUTON SUBMIT (VOIR CHECKCGU FUNCTION)//
-
-
-  document.getElementById('submit').disabled = true;
-
 
   //VERIFICATION ADRESSE EMAIL
 
@@ -167,19 +186,46 @@
             
     if(regEmail.test(mail)) {
 
-      document.getElementById("formMail").className = "form-group"
+      document.getElementById("labelMail").style.color = "black"
             
       return true;
 
     } else {
 
-      document.getElementById("formMail").className = "form-group has-error"
+      document.getElementById("labelMail").style.color = "red"
             
       return false;
     
     }
 
   }
+
+
+    //VERIFICATION VALIDITE PSEUDO (2 CARACTERES MIN 3 CHIFFRES MAX LONGEUR TOTAL INF A 21)
+
+    function checkPseudo() {
+        
+    var pseudo = document.getElementById('pseudo').value;
+
+    var regPseudo = new RegExp('^[a-zA-Z]{2,17}[0-9]{0,3}$','i');
+            
+    if(regPseudo.test(pseudo)) {
+
+      $('[data-toggle="pseudo"]').tooltip('hide')
+            
+      return true;
+
+    } else {
+
+      $('[data-toggle="pseudo"]').tooltip('show')
+            
+      return false;
+    
+    }
+
+  }
+
+
 
   //VERIFICATION VALIDITE MOT DE PASSE 1
 
@@ -191,12 +237,17 @@
 
     if(regPass.test(pass))
     {
+
+      $('[data-toggle="pass1"]').tooltip('hide')
+
       document.getElementById("formPass").className = "form-group"
 
       return true;
     }
     else
     {
+
+      $('[data-toggle="pass1"]').tooltip('show')
 
       document.getElementById("formPass").className = "form-group has-error"
 
@@ -214,12 +265,18 @@
 
     if (x == y)
     {
+
+      $('[data-toggle="pass2"]').tooltip('hide')
+
       document.getElementById("labelPass2").style.color = "black"
     
       return true;
     }
     else
     {
+
+      $('[data-toggle="pass2"]').tooltip('show')
+
       document.getElementById("labelPass2").style.color = "red"
     
       return false;
@@ -288,26 +345,27 @@
 
     if (cgu == true)
     {
-      document.getElementById('submit').disabled = false;
+
+      $('[data-toggle="pass2"]').tooltip('hide')
+
       return true;
     }
     else
 
     {
-      document.getElementById('submit').disabled = true;
+      $('[data-toggle="cgu"]').tooltip('show')
       return false;
     }
 
   }
 
 
-  //DEBUT FONCTION CHECKFORM
-
+  //VERIFIE LA VALIDITE DES CHAMPS OBLIGATOIRE DU FORM
 
 
 function checkForm() {
 
-  if (checkMail() == true && checkPass1() == true && check2Pass() == true && checkNom() == true && checkPrenom() == true)
+  if (checkMail() == true && checkPass1() == true && check2Pass() == true && checkNom() == true && checkPrenom() == true && checkCgu() == true)
   {
     return true;
   }
@@ -316,7 +374,7 @@ function checkForm() {
     return false;
   }
 
-}
+  }
 
 
 

@@ -16,14 +16,16 @@ class CreationUsers extends Migration {
 			$table->increments('id')->unsigned();
 			$table->string('username', 64)->unique();
 			$table->string('password', 64);
+			$table->string('email', 64)->unique();
 			$table->string('nom', 64);
 			$table->string('prenom', 64);
-			$table->string('date_naissance', 10);
-			$table->string('tel');
+			$table->date('date_naissance', 30);
+			$table->string('tel', 30);
 			$table->string('adresse', 64);
-			$table->string('cp');
-			$table->string('ville', 64);
+			$table->string('cp', 64);
+			$table->string('ville', 64):
 			$table->enum('statut', array('admin', 'exposant','vendeur'))->default('exposant');
+			$table->tinyInteger('cgu');
 			$table->string('remember_token', 100)->nullable();
 			$table->timestamps();
 		});
