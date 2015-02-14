@@ -211,11 +211,15 @@
             
     if(regPseudo.test(pseudo)) {
 
+      document.getElementById("labelPseudo").style.color = "black"
+
       $('[data-toggle="pseudo"]').tooltip('hide')
             
       return true;
 
     } else {
+
+       document.getElementById("labelPseudo").style.color = "red"
 
       $('[data-toggle="pseudo"]').tooltip('show')
             

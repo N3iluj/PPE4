@@ -19,13 +19,18 @@ class RemindersController extends Controller {
 	 */
 	public function postRemind()
 	{
-		switch ($response = Password::remind(Input::only('email')))
+		$response = Password::remind(Input::only('email'), function($message){
+				$message->subject('Réinitialisation de mot de passe'); 
+			});
+
+		switch ($response )
 		{
 			case Password::INVALID_USER:
 				Session::flash('fail', 'Adresse e-mail inconnue');
 				return Redirect::to('password/remind')->with('error', Lang::get($response));
 
 			case Password::REMINDER_SENT:
+				Session::flash('info', 'Un email vous a été envoyé');
 				return Redirect::to('auth/login')->with('status', Lang::get($response));
 		}
 	}
@@ -40,7 +45,7 @@ class RemindersController extends Controller {
 	{
 		if (is_null($token)) App::abort(404);
 
-		return View::make('password.reset')->with('token', $token);
+		return View::make('password/reset')->with('token', $token);
 	}
 
 	/**
@@ -69,6 +74,7 @@ class RemindersController extends Controller {
 				return Redirect::back()->with('error', Lang::get($response));
 
 			case Password::PASSWORD_RESET:
+				Session::flash('info', 'Votre mot de passe a été réinitialisé');
 				return Redirect::to('/');
 		}
 	}

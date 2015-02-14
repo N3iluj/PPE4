@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.mail.yahoo.fr',
+	'host' => 'smtp.gmail.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('glpmresppe4@yahoo.fr' => null, 'Exposition Lego®' => null),
+	'from' => array('address' => 'glpmresppe4@gmail.com', 'name' => 'Exposition Lego®'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'glpmresppe4@yahoo.fr',
+	'username' => 'glpmresppe4@gmail.com',
 
 	/*
 	|--------------------------------------------------------------------------
