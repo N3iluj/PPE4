@@ -6,7 +6,7 @@
 
 <div class="row">
   <div class="col-md-12">
-  <div class="well bs-component"><br \><br \>
+  <div class="well bs-component"><br \>
     {{Form::open(array('url' => 'user', 'method' => 'POST','class'=>'form-horizontal', 'onsubmit'=>'return checkForm();'))}}
       <fieldset>
         <legend>Inscription</legend><span style="color: red;">*</span> : champs obligatoires<br \><br \><br \>
@@ -18,12 +18,12 @@
         <div id="formMail" class="form-group">
           <label id="labelMail" class="col-md-2 control-label" for="mail"> Adresse e-mail <span style="color: red;">*</span></label>
           <div class="col-md-3">
-            {{ Form::email('mail', null, array('id'=>'mail', 'class' => 'form-control', 'placeholder'=>'Adresse e-mail', 'onblur'=>'checkMail()', 'data-toggle'=>'mail')) }}
+            {{ Form::email('mail', null, array('id'=>'mail', 'class' => 'form-control', 'placeholder'=>'Adresse e-mail', 'onblur'=>'checkMail()', 'data-toggle'=>'mail', 'data-placement'=>'top', 'data-content'=>"L'adresse e-mail doit être valide" )) }}
           </div>
 
           <label id="labelPseudo" class="col-md-2 control-label" for="pseudo">Pseudo </label>
           <div class="col-md-3">
-            {{ Form::text('pseudo', null, array('id'=>'pseudo', 'class' => 'form-control', 'title'=>'Le pseudo doit être inférieur à 20 caractères, contenir plus de 2 lettres et moins de 4 chiffres', 'placeholder'=>'Pseudo', 'onblur'=>'checkPseudo()', 'data-toggle'=>'pseudo')) }}
+            {{ Form::text('pseudo', null, array('id'=>'pseudo', 'class' => 'form-control', 'data-content'=>'Le pseudo doit être inférieur à 20 caractères, contenir plus de 2 lettres et moins de 4 chiffres', 'data-placement'=>'top','placeholder'=>'Pseudo', 'onblur'=>'checkPseudo()', 'data-toggle'=>'pseudo')) }}
           </div>
         </div>
 
@@ -35,12 +35,12 @@
 
           <label class="col-md-2 control-label" for="pass1">Mot de passe <span style="color: red;">*</span></label>
           <div class="col-md-3">
-            {{ Form::password('pass1', array('id' => 'pass1', 'class' => 'form-control',  'title'=>'Le mot de passe doit contenir au moins 8 caractères', 'placeholder'=>'Mot de passe', 'onkeydown'=>'checkPass1()', 'data-toggle'=>'pass1')) }}
+            {{ Form::password('pass1', array('id' => 'pass1', 'class' => 'form-control', 'placeholder'=>'Mot de passe', 'onkeydown'=>'checkPass1()', 'data-placement'=>'right', 'data-content'=>"Le mot de passe doit contenir au moins 8 caractères", 'data-toggle'=>'pass1')) }}
           </div>
 
           <label id="labelPass2" class="col-md-2 control-label" for="pass2">Verifiez le mot de passe <span style="color: red;">*</span></label>
           <div class="col-md-3">
-            {{ Form::password ('pass2', array('id' => 'pass2', 'class' => 'form-control', 'title'=>'Les mots de passe doivent correspondre', 'placeholder'=>'Confirmez votre mot de passe', 'onkeyup'=>'check2Pass()', 'data-toggle'=>'pass2')) }}
+            {{ Form::password ('pass2', array('id' => 'pass2', 'class' => 'form-control', 'data-content'=>'Les mots de passe ne correspondent pas', 'data-placement'=>'right', 'placeholder'=>'Confirmez votre mot de passe', 'onkeyup'=>'check2Pass()', 'data-toggle'=>'pass2')) }}
           </div>
 
         </div>
@@ -151,7 +151,7 @@
           <div style="text-align: center;">
             <div class="checkbox">
               <label id="labelCgu">
-                {{Form::checkbox('cgu', 1, false, array('id'=>'cgu', 'title'=>'Vous devez accepter les conditions pour continuer', 'onchange'=>'checkCgu()', 'data-toggle'=>'cgu'))}} J'accepte les {{HTML::link('cgu', "Conditions Générales d'Utilisation")}}.
+                {{Form::checkbox('cgu', 1, false, array('id'=>'cgu', 'data-placement'=>'top', 'data-content'=>'Vous devez accepter les conditions pour continuer', 'onchange'=>'checkCgu()', 'data-toggle'=>'cgu'))}} J'accepte les {{HTML::link('cgu', "Conditions Générales d'Utilisation")}}.
               </label>
             </div>
           </div>
@@ -187,12 +187,16 @@
     if(regEmail.test(mail)) {
 
       document.getElementById("labelMail").style.color = "black"
+
+      $('[data-toggle="mail"]').popover('hide')
             
       return true;
 
     } else {
 
       document.getElementById("labelMail").style.color = "red"
+
+      $('[data-toggle="mail"]').popover('show')
             
       return false;
     
@@ -213,7 +217,7 @@
 
       document.getElementById("labelPseudo").style.color = "black"
 
-      $('[data-toggle="pseudo"]').tooltip('hide')
+      $('[data-toggle="pseudo"]').popover('hide')
             
       return true;
 
@@ -221,7 +225,7 @@
 
        document.getElementById("labelPseudo").style.color = "red"
 
-      $('[data-toggle="pseudo"]').tooltip('show')
+      $('[data-toggle="pseudo"]').popover('show')
             
       return false;
     
@@ -242,7 +246,7 @@
     if(regPass.test(pass))
     {
 
-      $('[data-toggle="pass1"]').tooltip('hide')
+      $('[data-toggle="pass1"]').popover('hide')
 
       document.getElementById("formPass").className = "form-group"
 
@@ -251,7 +255,7 @@
     else
     {
 
-      $('[data-toggle="pass1"]').tooltip('show')
+      $('[data-toggle="pass1"]').popover('show')
 
       document.getElementById("formPass").className = "form-group has-error"
 
@@ -270,7 +274,7 @@
     if (x == y)
     {
 
-      $('[data-toggle="pass2"]').tooltip('hide')
+      $('[data-toggle="pass2"]').popover('hide')
 
       document.getElementById("labelPass2").style.color = "black"
     
@@ -279,7 +283,7 @@
     else
     {
 
-      $('[data-toggle="pass2"]').tooltip('show')
+      $('[data-toggle="pass2"]').popover('show')
 
       document.getElementById("labelPass2").style.color = "red"
     
@@ -350,14 +354,14 @@
     if (cgu == true)
     {
 
-      $('[data-toggle="pass2"]').tooltip('hide')
+      $('[data-toggle="pass2"]').popover('hide')
 
       return true;
     }
     else
 
     {
-      $('[data-toggle="cgu"]').tooltip('show')
+      $('[data-toggle="cgu"]').popover('show')
       return false;
     }
 

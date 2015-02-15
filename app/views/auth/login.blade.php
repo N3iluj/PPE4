@@ -3,7 +3,7 @@
 @parent
 
 <div class="row">
-    <div class="well bs-component"><br \><br \>
+    <div class="well bs-component"><br \>
       {{Form::open(array('url' => 'auth/login', 'method' => 'POST','class'=>'form-horizontal'))}} 
       <fieldset> 
 
