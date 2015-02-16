@@ -38,10 +38,18 @@ Route::resource('exposition', 'ExpositionController');
 Route::resource('repas', 'RepasController');
 
 
-Route::resource('projet', 'ProjetController');
+
+//NECESSITE D ETRE LOG POUR AVOIR ACCES A LA CREATION D'UN PROJET
+
+Route::group(array('before'=>'auth'), function()
+{
+	Route::resource('projet', 'ProjetController');
+});
 
 
 Route::resource('hebergement', 'HebergementController');
+
+
 
 
 //ROUTE RENVOYE PAR AUTH/LOGIN (FUTUR BACK OFFICE)
@@ -51,6 +59,8 @@ Route::get('hello', function()
 	echo "lol";
 }
 );
+
+
 
 //ROUTE PAGE 404 SI INCONNUE
 

@@ -2,6 +2,14 @@
 
 class ProjetController extends \BaseController {
 
+
+	public function __construct()
+  {
+  		$this->beforeFilter('auth', array('only' => 'getLogout'));
+	//	$this->beforeFilter('guest', array('except' => 'getLogout'));
+		$this->beforeFilter('csrf', array('on' => 'post'));
+  }
+
 	/**
 	 * Display a listing of the resource.
 	 *

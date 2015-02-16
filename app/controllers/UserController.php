@@ -111,7 +111,8 @@ class UserController extends \BaseController {
 			
 			if(Input::get('pass1')==Input::get('pass2'))
 			{
-				$user-> password= Hash::make(Input::get('pass1'));
+				$pass = Input::get('pass1');
+				$user-> password = Hash::make($pass);
 			}
 			else 
 			{
@@ -172,7 +173,11 @@ class UserController extends \BaseController {
 
 			if($user->save())
 			{
-				return Redirect::to('projet/create');
+				if (Auth::attempt(array('email' => $mail, 'password' => $pass))) 
+				{
+    				return Redirect::to('projet/create');
+				}
+				
 			}
 		
 		} 
