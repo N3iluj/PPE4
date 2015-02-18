@@ -39,7 +39,7 @@ class ProjetController extends \BaseController {
 	 */
 	public function store()
 	{
-		$rules = array('theme' => 'required|max:50|min:3');
+		$rules = array('theme' => 'required', 'piece' => 'required', 'longueur' => 'required', 'largeur' => 'required', 'estimation' => 'required');
 		$validation=Validator::make(Input::all(),$rules);
   		if ($validation->fails())
   		{
@@ -48,33 +48,31 @@ class ProjetController extends \BaseController {
   		}
   		else
   		{
-			$projet = new User;
-			$projet-> nom=Input::get('nom');
-			$projet-> prenom=Input::get('prenom');
-			$projet-> date_naissance=Input::get('dateNaissance');
-			$projet-> statut=Input::get('statut');
-			$projet-> adresse=Input::get('adresse');
-			$projet-> cp=Input::get('cp');
-			$projet-> ville=Input::get('ville');
-			$projet-> tel=Input::get('tel');
-			$projet-> email=Input::get('email');
-			$projet-> username=Input::get('pseudo');
-			
-			if(Input::get('password')==Input::get('mdp2')){
-				$projet-> password= Hash::make(Input::get('password'));
-			}
-			else {
-				Session::flash('fail', 'Mots de passe différents');
-				return Redirect::back()->withInput(); 
-			}
+			//INSTANCIATION DU PROJET
 
-			if($projet->save()){
-				return Redirect::to('projet/create');
+			$projet = new Projet;
+
+			$projet-> theme=Input::get('theme');
+			$projet-> longueur=Input::get('longueur');
+			$projet-> largeur=Input::get('largeur');
+			$projet-> nb_piece=Input::get('piece');
+			$projet-> valeur=Input::get('estimation');
+			$projet-> courant=Input::get('elec');
+			$projet-> user_id=Input::get('user'); 
+
+
+			//INSERTION EN BASE
+
+			if($projet->save())
+			{
+				if (Auth::check()) 
+				{
+    				return Redirect::to('hebergement/create');
+				}
+				
 			}
 		
-		}
-
-		return Redirect::to('projet/create');
+		} 
 	}
 
 

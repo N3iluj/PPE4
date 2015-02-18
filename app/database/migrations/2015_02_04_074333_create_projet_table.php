@@ -15,8 +15,8 @@ class CreateProjetTable extends Migration {
 		Schema::create('projets', function($table) {
 			$table->increments('id')->unsigned();
 			$table->string('theme', 64);
-			$table->decimal('longueur', 8, 2);
-			$table->decimal('largeur', 8, 2);
+			$table->string('longueur', 40);
+			$table->string('largeur', 40);
 			$table->integer('nb_piece');
 			$table->decimal('valeur', 8, 2);
 			$table->boolean('courant');

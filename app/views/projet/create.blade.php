@@ -7,6 +7,7 @@
   <div class="col-md-12">
   <div class="well bs-component"><br \>
     {{Form::open(array('url' => 'projet', 'method' => 'POST','class'=>'form-horizontal', 'onsubmit'=>'return checkForm();'))}}
+    {{ Form::hidden('user', Auth::user()->id) }}
       <fieldset>
         <legend>Projet</legend><span style="color: red;">*</span> : champs obligatoires<br \><br \><br \>
 
@@ -36,7 +37,7 @@
           <label id="labelSuperficie" class="col-md-2 control-label" for="superficie">Superficie (en mètres) <span style="color: red;">*</span></label>
 
           <div class="col-md-2">
-            {{ Form::text('longueur', null, array('id'=>'longeur', 'class' => 'form-control', 'placeholder'=>'Longeur', 'onblur'=>'checkSuperficie()')) }}
+            {{ Form::text('longueur', null, array('id'=>'longueur', 'class' => 'form-control', 'placeholder'=>'Longueur', 'onblur'=>'checkLongueur()')) }}
           </div>
 
           <div class="col-md-1">
@@ -44,7 +45,7 @@
           </div>
 
           <div class="col-md-2">
-            {{ Form::text('largeur', null, array('class' => 'form-control', 'placeholder'=>'Largeur')) }}
+            {{ Form::text('largeur', null, array('id' => 'largeur', 'class' => 'form-control', 'placeholder'=>'Largeur', 'onblur'=>'checkLargeur()')) }}
           </div>
 
         </div>
@@ -57,13 +58,13 @@
           <div class="col-md-10">
             <div class="radio">
               <label>
-                <input type="radio" name="elec" id="optionsRadios1" value="elecTrue" checked="">
+                <input type="radio" name="elec" id="elec" value="1" checked=''>
                 Oui
               </label>
             </div>
             <div class="radio">
               <label>
-                <input type="radio" name="elec" id="optionsRadios2" value="elecFalse">
+                <input type="radio" name="elec" id="elec" value="0">
                 Non
               </label>
             </div>
@@ -74,13 +75,13 @@
 
         <!-- INPUT VALEUR DU DIAPORAMA -->
 
-        <div id="formValeur" class="form-group">
-          <label id="labelValeur" class="col-md-2 control-label" for="valeur">Estimez la valeur de votre diaporama <span style="color: red;">*</span></label>
+        <div id="formEstimation" class="form-group">
+          <label id="labelEstimation" class="col-md-2 control-label" for="estimation">Estimez la valeur de votre diaporama <span style="color: red;">*</span></label>
           <div class="col-md-3">
-            {{ Form::text('valeur', null, array('id'=>'valeur', 'class' => 'form-control', 'placeholder'=>'0.00')) }}
+            {{ Form::text('estimation', null, array('id'=>'estimation', 'class' => 'form-control', 'placeholder'=>'0.00', 'onblur'=>'checkEstimation()')) }}
           </div>
           <div class="col-md-1">
-            <label id="labelValeur2" class="col-md-2 control-label" for="valeur">€</label>
+            <label id="labelEstimation" class="col-md-2 control-label" for="estimation">€</label>
           </div>
         </div><br \><br \>
 
@@ -111,7 +112,7 @@
         
     var theme = document.getElementById('theme').value;
 
-    var regTheme = new RegExp('^[a-zA-Z]{2,17}[0-9]{0,3}$','i');
+    var regTheme = new RegExp('^[a-zA-Z, :alnum:, :space:, :graph:]{2,17}$','i');
             
     if(regTheme.test(theme)) {
 
@@ -156,13 +157,13 @@
 
 
 
-  //VERIFICATION VALIDITE SUPERFICIE
+  //VERIFICATION VALIDITE SUPERFICIE LONGEUR
 
-  function checkSuperficie() {
+  function checkLongueur() {
 
     var longueur = document.getElementById('longeur').value;
 
-    var regSuperficie = new RegExp('^[0-9]{1,7}((.|,)[0-9]{2})?$','i')
+    var regSuperficie = new RegExp('^[0-9]{1,}(\.|)[0-9]{0,5}$','i')
 
     if(regSuperficie.test(longeur))
     {
@@ -181,80 +182,25 @@
     }
   }
 
-  //VERIFICATION CORRESPONDANCE MOT DE PASSE
+    //VERIFICATION VALIDITE SUPERFICIE
 
-  function check2Pass() {
+  function checkLargeur() {
 
-    var x = document.getElementById("pass1").value;
-    var y = document.getElementById("pass2").value;
+    var largeur = document.getElementById('largeur').value;
 
-    if (x == y)
+    var regSuperficie = new RegExp('^[0-9]{1,}(\.|)[0-9]{0,5}$','i')
+
+    if(regSuperficie.test(largeur))
     {
 
-      $('[data-toggle="pass2"]').popover('hide')
+      document.getElementById("formSuperficie").className = "form-group"
 
-      document.getElementById("labelPass2").style.color = "black"
-    
       return true;
     }
     else
     {
 
-      $('[data-toggle="pass2"]').popover('show')
-
-      document.getElementById("labelPass2").style.color = "red"
-    
-      return false;
-
-    }
-  }
-
-  //VERIFICATION VALIDITE NOM
-
-  function checkNom()
-  {
-    var nom = document.getElementById("nom").value;
-    var regNom = new RegExp('[a-zA-Z]{1,20}$','i'); 
-
-    if(regNom.test(nom))
-    {
-
-      document.getElementById("labelNom").style.color = "black"
-
-      return true;
-   
-    }
-
-    else
-     {
-
-      document.getElementById("labelNom").style.color = "red"
-
-      return false;
-
-    }
-  }
-
-  //VERIFICATION VALIDITE PRENOM
-
-  function checkPrenom()
-  {
-    var prenom = document.getElementById("prenom").value;
-    var regPrenom = new RegExp('[a-zA-Z]{1,20}$','i'); 
-
-    if(regPrenom.test(prenom))
-    {
-
-      document.getElementById("labelPrenom").style.color = "black"
-
-      return true;
-   
-    }
-
-    else
-     {
-
-      document.getElementById("labelPrenom").style.color = "red"
+      document.getElementById("formSuperficie").className = "form-group has-error"
 
       return false;
 
@@ -262,35 +208,38 @@
   }
 
 
-  //VERIFICATION CGU COCHE
+  //VERIFICATION VALIDITE  ESTIMATION
 
-  function checkCgu() {
+  function checkEstimation() {
 
-    var cgu = document.getElementById("cgu").checked;
+    var estimation = document.getElementById('estimation').value;
 
-    if (cgu == true)
+    var regEstimation = new RegExp('^[0-9]{1,}(\.|)[0-9]{0,2}$','i')
+
+    if(regEstimation.test(estimation))
     {
 
-      $('[data-toggle="pass2"]').popover('hide')
+      document.getElementById("formEstimation").className = "form-group"
 
       return true;
     }
     else
-
     {
-      $('[data-toggle="cgu"]').popover('show')
-      return false;
-    }
 
+      document.getElementById("formEstimation").className = "form-group has-error"
+
+      return false;
+
+    }
   }
 
-
+  
   //VERIFIE LA VALIDITE DES CHAMPS OBLIGATOIRE DU FORM
 
 
 function checkForm() {
 
-  if (checkTheme() == true && checkNbPiece() == true && checkSuperficie() == true)
+  if (checkTheme() == true && checkNbPiece() == true && checkLongueur() == true && checkLargeur() == true)
   {
     return true;
   }

@@ -23,7 +23,7 @@ class CreationUsers extends Migration {
 			$table->string('tel', 30);
 			$table->string('adresse', 64);
 			$table->string('cp', 64);
-			$table->string('ville', 64):
+			$table->string('ville', 64);
 			$table->enum('statut', array('admin', 'exposant','vendeur'))->default('exposant');
 			$table->tinyInteger('cgu');
 			$table->string('remember_token', 100)->nullable();
