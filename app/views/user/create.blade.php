@@ -9,7 +9,7 @@
   <div class="well bs-component"><br \>
     {{Form::open(array('url' => 'user', 'method' => 'POST','class'=>'form-horizontal', 'onsubmit'=>'return checkForm();'))}}
       <fieldset>
-        <legend>Inscription</legend><span style="color: red;">*</span> : champs obligatoires<br \><br \><br \>
+        <legend>Inscription de l'exposant</legend><span style="color: red;">*</span> : champs obligatoires<br \><br \><br \>
 
 
         <!-- INPUT MAIL ET PSEUDO -->

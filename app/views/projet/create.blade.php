@@ -9,7 +9,7 @@
     {{Form::open(array('url' => 'projet', 'method' => 'POST','class'=>'form-horizontal', 'onsubmit'=>'return checkForm();'))}}
     {{ Form::hidden('user', Auth::user()->id) }}
       <fieldset>
-        <legend>Projet</legend><span style="color: red;">*</span> : champs obligatoires<br \><br \><br \>
+        <legend>Inscription du projet</legend><span style="color: red;">*</span> : champs obligatoires<br \><br \><br \>
 
 
         <!-- INPUT THEME ET NB DE PIECES -->
@@ -17,7 +17,7 @@
         <div class="form-group">
           <label id="labelTheme" class="col-md-2 control-label" for="theme"> Thème du projet <span style="color: red;">*</span></label>
           <div class="col-md-3">
-            {{ Form::text('theme', null, array('id'=>'theme', 'class' => 'form-control', 'placeholder'=>'Ex : Star Wars', 'onblur'=>'checkTheme()')) }}
+            {{ Form::text('theme', null, array('id'=>'theme', 'class' => 'form-control', 'placeholder'=>'Ex : Star Wars')) }}
           </div>
 
 
@@ -104,31 +104,6 @@
 
 
 <script>
-
-
-  //VERIFICATION NOM DU THEME
-
-  function checkTheme() {
-        
-    var theme = document.getElementById('theme').value;
-
-    var regTheme = new RegExp('^[a-zA-Z, :alnum:, :space:, :graph:]{2,17}$','i');
-            
-    if(regTheme.test(theme)) {
-
-      document.getElementById("labelTheme").style.color = "black"
-            
-      return true;
-
-    } else {
-
-      document.getElementById("labelTheme").style.color = "red"
-            
-      return false;
-    
-    }
-
-  }
 
 
     //VERIFICATION VALIDITE NB DE PIECES
@@ -239,7 +214,7 @@
 
 function checkForm() {
 
-  if (checkTheme() == true && checkNbPiece() == true && checkLongueur() == true && checkLargeur() == true)
+  if (checkNbPiece() == true && checkLongueur() == true && checkLargeur() == true)
   {
     return true;
   }
