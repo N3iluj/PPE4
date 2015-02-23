@@ -6,7 +6,7 @@
 <div class="row">
   <div class="col-md-12">
   <div class="well bs-component"><br \>
-    {{Form::open(array('url' => 'projet', 'method' => 'POST','class'=>'form-horizontal', 'onsubmit'=>'return checkForm();'))}}
+    {{Form::open(array('url' => 'hebergement', 'method' => 'POST','class'=>'form-horizontal'))}}
     {{ Form::hidden('user', Auth::user()->id) }}
       <fieldset>
         <legend>Inscription aux repas et à l'hébergement</legend><span style="color: red;">*</span> : champs obligatoires<br \><br \><br \>
@@ -98,14 +98,14 @@
 
             <div class="radio">
               <label>
-                <input type="radio" name="hebergement" id="hebergement" value="oui">
+                <input type="radio" name="hebergement" id="hebergement" value="oui" onclick="showHebergement()">
                 Oui
               </label>
             </div>
 
             <div class="radio">
               <label>
-                <input type="radio" name="hebergement" id="hebergement" value="non" checked=''>
+                <input type="radio" name="hebergement" id="hebergement" value="non" onclick="hideHebergement()" checked=''>
                 Non
               </label>
             </div>
@@ -116,11 +116,11 @@
 
 
 
+
         <!-- INPUT NOMBRE D'HEBERGEMENTS -->
 
-        <div id="herbegementOui">
 
-        <div class="form-group">
+        <div id="showHebergement" class="form-group" style="display: none;">
         	
           <label id="labelLit" class="col-md-2 control-label" for="lit"> Nombre de lits à l'internat </label>
           <div class="col-md-3">
@@ -133,9 +133,7 @@
           <div class="col-md-3">
             {{ Form::number('salle', 0, array('id'=>'salle', 'class' => 'form-control')) }}
           </div>
-        </div>
-
-    		</div><br \><br \>
+        </div><br \><br \>
 
 
 
@@ -147,7 +145,7 @@
 
         <div class="form-group">
           <div style="text-align: center;">
-            {{Form::submit('Suivant', array('class'=>'btn btn-primary', 'id'=>'submit'))}}
+            {{Form::submit('Terminer', array('class'=>'btn btn-primary', 'id'=>'submit'))}}
             {{Form::close()}}
           </div>
         </div> <br \><br \>
@@ -162,23 +160,27 @@
 <script>
 
 
-   
-  
-  //VERIFIE LA VALIDITE DES CHAMPS OBLIGATOIRE DU FORM
 
+ //AFFICHAGE INPUT NOMBRE HEBERGEMENT SI RADIO SUR OUI
 
-function checkForm() {
-
-  if (checkNbPiece() == true && checkLongueur() == true && checkLargeur() == true)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  function showHebergement() {
+        
+    document.getElementById('showHebergement').style.display = "block"
 
   }
+
+
+
+
+
+   //DESACTIVE AFFICHAGE INPUT NOMBRE HEBERGEMENT SI RADIO SUR NON
+
+  function hideHebergement() {
+        
+    document.getElementById('showHebergement').style.display = "none"
+
+  }
+
 
 
 

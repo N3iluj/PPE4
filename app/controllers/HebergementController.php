@@ -31,7 +31,34 @@ class HebergementController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+
+  			//INSTANCIATION DE L'HEBERGEMENT
+
+
+			$hebergement = new Hebergement;
+
+			$hebergement-> nom=Input::get('nom');
+			$hebergement-> prenom=Input::get('prenom');
+			$hebergement-> statut=Input::get('statut');
+			$hebergement-> adresse=Input::get('adresse');
+			$hebergement-> cp=Input::get('cp');
+			$hebergement-> ville=Input::get('ville');
+			$hebergement-> cgu=Input::get('cgu'); 
+
+
+			//INSERTION EN BASE
+
+			if($user->save())
+			{
+				if (Auth::attempt(array('email' => $mail, 'password' => $pass))) 
+				{
+    				return Redirect::to('projet/create');
+				}
+				
+			}
+		
+		} 
+
 	}
 
 
