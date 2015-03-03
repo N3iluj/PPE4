@@ -12,6 +12,7 @@ class CreationUsers extends Migration {
 	 */
 	public function up()
 	{
+	
 		Schema::create('users', function($table) {
 			$table->increments('id')->unsigned();
 			$table->string('username', 64)->unique();
@@ -26,9 +27,25 @@ class CreationUsers extends Migration {
 			$table->string('ville', 64);
 			$table->enum('statut', array('admin', 'exposant','vendeur'))->default('exposant');
 			$table->tinyInteger('cgu');
+			$table->integer('repas1mid');
+			$table->integer('repas1soir');
+			$table->integer('repas2mid');
+			$table->integer('repas2soir');
+			$table->integer('internat');
+			$table->integer('salle');
 			$table->string('remember_token', 100)->nullable();
 			$table->timestamps();
 		});
+
+
+		Schema::create('allergies', function($table) {
+			$table->increments('id')->unsigned();
+			$table->string('nom', 64);
+			$table->integer('user_id')->unsigned();
+				$table->foreign('user_id')->references('id')->on('users');
+			$table->timestamps();
+		});
+
 	}
 
 	/**

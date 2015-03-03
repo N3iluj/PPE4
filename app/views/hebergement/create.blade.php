@@ -68,18 +68,18 @@
         	<label id="labelAllergies" class="col-md-2 control-label" for="allergies"> Allergies </label>
         	<div class="col-md-3">
             	<div style="width:200px; height: 70px; overflow-y: scroll;">
-    				<input type="checkbox" /> Gluten <br />
-    				<input type="checkbox" /> Oeufs <br />
-    				<input type="checkbox" /> Soja <br />
-    				<input type="checkbox" /> Poissons <br />
-    				<input type="checkbox" /> Lait <br />
-    				<input type="checkbox" /> Fruits à coques <br />
-    				<input type="checkbox" /> Céléri <br />
-    				<input type="checkbox" /> Moutarde <br />
-    				<input type="checkbox" /> Graines de sésames <br />
-    				<input type="checkbox" /> Lupin <br />
-    				<input type="checkbox" /> Mollusques <br />
-    				<input type="checkbox" /> Crustacés <br />
+    				<input name="allergie1" type="checkbox" value="Gluten" /> Gluten <br />
+    				<input name="allergie2" type="checkbox" value="Oeufs" /> Oeufs <br />
+    				<input name="allergie3" type="checkbox" value="Soja" /> Soja <br />
+    				<input name="allergie4" type="checkbox" value="Poissons" /> Poissons <br />
+    				<input name="allergie5" type="checkbox" value="Lait" /> Lait <br />
+    				<input name="allergie6" type="checkbox" value="Fruits a coques" /> Fruits à coques <br />
+    				<input name="allergie7" type="checkbox" value="Celeri" /> Céléri <br />
+    				<input name="allergie8" type="checkbox" value="Moutarde" /> Moutarde <br />
+    				<input name="allergie9" type="checkbox" value="Graines de sesames" /> Graines de sésames <br />
+    				<input name="allergie10" type="checkbox" value="Lupin" /> Lupin <br />
+    				<input name="allergie11" type="checkbox" value="Mollusques" /> Mollusques <br />
+    				<input name="allergie12" type="checkbox" value="Crustaces" /> Crustacés <br />
 				</div>
           	</div>
       	</div><br \>
@@ -122,9 +122,9 @@
 
         <div id="showHebergement" class="form-group" style="display: none;">
         	
-          <label id="labelLit" class="col-md-2 control-label" for="lit"> Nombre de lits à l'internat </label>
+          <label id="labelInternat" class="col-md-2 control-label" for="internat"> Nombre de lits à l'internat </label>
           <div class="col-md-3">
-            {{ Form::number('lit', 0, array('id'=>'lit', 'class' => 'form-control')) }}
+            {{ Form::number('internat', 0, array('id'=>'lit', 'class' => 'form-control')) }}
           </div>
 
 

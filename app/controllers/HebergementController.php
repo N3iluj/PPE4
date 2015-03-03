@@ -32,34 +32,51 @@ class HebergementController extends \BaseController {
 	public function store()
 	{
 
-  			//INSTANCIATION DE L'HEBERGEMENT
+  			//INSTANCIATION DE L'UTILISATEUR
+
+			$user = User::find(Input::get('user')); 
+
+			//MISE A JOUR DES INFORMATIONS HEBERGEMENT DE L'UTILSATEUR
+
+			$user-> repas1mid=Input::get('repas1mid');
+			$user-> repas1soir=Input::get('repas1soir');
+			$user-> repas2mid=Input::get('repas2mid');
+			$user-> repas2soir=Input::get('repas2soir');
+			$user-> internat=Input::get('internat');
+			$user-> salle=Input::get('salle'); 
 
 
-			$hebergement = new Hebergement;
+			//ON RECUPERER L ID DE L UTILISATEUR
 
-			$hebergement-> nom=Input::get('nom');
-			$hebergement-> prenom=Input::get('prenom');
-			$hebergement-> statut=Input::get('statut');
-			$hebergement-> adresse=Input::get('adresse');
-			$hebergement-> cp=Input::get('cp');
-			$hebergement-> ville=Input::get('ville');
-			$hebergement-> cgu=Input::get('cgu'); 
+			$userid = $user-> id;
 
 
-			//INSERTION EN BASE
+			//ON RECUPERE TOUS LES INPUTS D ALLERGIES
+
+			for ($i = 0; $i < 13; $i++)
+			{
+				$inputAllergie = Input::get('allergie' . $i);
+
+				//SI L ALLERGIE EST COCHEE, ON L INSERT EN BASE AVEC L ID DE L UTILISATEUR CORRESPONDANT
+
+    			if (isset($inputAllergie))
+    			{
+    				DB::insert('insert into allergies (nom, user_id) values (?, ?)', array($inputAllergie, $userid));
+    			}
+			}
+
+
+			//ON TERMINE AVEC LA MISE A JOUR DES INFOS DE L UTILISATION EN BASE
+
 
 			if($user->save())
 			{
-				if (Auth::attempt(array('email' => $mail, 'password' => $pass))) 
-				{
-    				return Redirect::to('projet/create');
-				}
-				
+    				return Redirect::to('auth/login')->with(Session::flash('success', "Inscription validée. Les informations concernant l'exposition vous ont été envoyées par email")); 
 			}
 		
 		} 
 
-	}
+	
 
 
 	/**
