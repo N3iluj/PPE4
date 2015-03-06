@@ -71,6 +71,10 @@ class HebergementController extends \BaseController {
 
 			if($user->save())
 			{
+				Mail::send('emails.welcome', ['key' => 'value'], function($message)
+				{
+    				$message->to('foo@example.com', 'John Smith')->subject('Welcome!');
+				});
     				return Redirect::to('auth/login')->with(Session::flash('success', "Inscription validée. Les informations concernant l'exposition vous ont été envoyées par email")); 
 			}
 		
