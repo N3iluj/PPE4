@@ -47,7 +47,7 @@ class AuthController extends BaseController {
 
 			if (Auth::attempt($user)) 
 			{
-		  		return Redirect::intended('hello')
+		  		return Redirect::intended('user/show')
 				->with(Session::flash('success', 'Vous êtes connecté') . Auth::user()->username);
 			}
 		
@@ -62,7 +62,7 @@ class AuthController extends BaseController {
    			$user = array('username' => $unUser -> username, 'password' => Input::get('password'));
    			if (Auth::attempt($user)) 
 			{
-		  		return Redirect::intended('hello')
+		  		return Redirect::intended('user/show')
 				->with(Session::flash('success', 'Vous êtes connecté') . Auth::user()->username);
 			}
 		

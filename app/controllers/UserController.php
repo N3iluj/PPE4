@@ -191,9 +191,11 @@ class UserController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show()
 	{
-		//
+		$id = Auth::user()->id;
+		$unUser=User::find($id);
+		return View::make('user/update')->with('unUser', $unUser);
 	}
 
 
