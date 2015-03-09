@@ -62,7 +62,7 @@ class UserController extends \BaseController {
 			//AVEC ADRESSE EMAIL OU PSEUDO (CF AUTHCONTROLLER FONCTION POSTLOGIN)
 
 			$pseudo = Input::get('pseudo');
-			if (empty($peudo)) 
+			if (empty($pseudo)) 
 			{
 				$chaine = "abcdefghijklmnpqrstuvwxy";
 				$car = 10;

@@ -71,11 +71,28 @@ class HebergementController extends \BaseController {
 
 			if($user->save())
 			{
-				Mail::send('emails.welcome', ['key' => 'value'], function($message)
+
+				// TRANSFORMATION OBJET USER TO ARRAY
+
+				DB::setFetchMode(PDO::FETCH_ASSOC);
+
+				$unUser = DB::table('users')->where('id', $user -> id)->first();
+
+				DB::setFetchMode(PDO::FETCH_CLASS);
+
+
+
+				// ENVOI DU MAIL
+
+				Mail::send('emails/inscription', $unUser, function($m) use ($user)
 				{
-    				$message->to('foo@example.com', 'John Smith')->subject('Welcome!');
+    				$m->to($user -> email, 'Lego')->subject('Inscription terminée !');
 				});
-    				return Redirect::to('auth/login')->with(Session::flash('success', "Inscription validée. Les informations concernant l'exposition vous ont été envoyées par email")); 
+
+
+				return Redirect::to('auth/login')->with(Session::flash('success', "Inscription terminée. Un email contenant les informations sur l'exposition vous a été envoyé."));
+
+				
 			}
 		
 		} 

@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'glpmresppe4@gmail.com', 'name' => 'Exposition Lego®'),
+	'from' => array('address' => 'glpmresppe4@gmail.com', 'name' => 'Brick A Dole'),
 
 	/*
 	|--------------------------------------------------------------------------
