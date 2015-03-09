@@ -41,8 +41,16 @@ class CreationUsers extends Migration {
 		Schema::create('allergies', function($table) {
 			$table->increments('id')->unsigned();
 			$table->string('nom', 64);
+			$table->timestamps();
+		});
+
+
+		Schema::create('users_allergies', function($table) {
+			$table->increments('id')->unsigned();
 			$table->integer('user_id')->unsigned();
 				$table->foreign('user_id')->references('id')->on('users');
+			$table->integer('allergie_id')->unsigned();
+				$table->foreign('allergie_id')->references('id')->on('allergies');
 			$table->timestamps();
 		});
 

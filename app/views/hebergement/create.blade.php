@@ -67,24 +67,19 @@
         <div class="form-group">
         	<label id="labelAllergies" class="col-md-2 control-label" for="allergies"> Allergies </label>
         	<div class="col-md-3">
-            	<div style="width:200px; height: 70px; overflow-y: scroll;">
-    				<input name="allergie1" type="checkbox" value="Gluten" /> Gluten <br />
-    				<input name="allergie2" type="checkbox" value="Oeufs" /> Oeufs <br />
-    				<input name="allergie3" type="checkbox" value="Soja" /> Soja <br />
-    				<input name="allergie4" type="checkbox" value="Poissons" /> Poissons <br />
-    				<input name="allergie5" type="checkbox" value="Lait" /> Lait <br />
-    				<input name="allergie6" type="checkbox" value="Fruits a coques" /> Fruits à coques <br />
-    				<input name="allergie7" type="checkbox" value="Celeri" /> Céléri <br />
-    				<input name="allergie8" type="checkbox" value="Moutarde" /> Moutarde <br />
-    				<input name="allergie9" type="checkbox" value="Graines de sesames" /> Graines de sésames <br />
-    				<input name="allergie10" type="checkbox" value="Lupin" /> Lupin <br />
-    				<input name="allergie11" type="checkbox" value="Mollusques" /> Mollusques <br />
-    				<input name="allergie12" type="checkbox" value="Crustaces" /> Crustacés <br />
-				</div>
-          	</div>
-      	</div><br \>
+            	<div style="width:200px; height: 70px; overflow-y: scroll;"> 
+                <?php
+                  $allergies = Allergie::all();
+                  foreach ($allergies as $uneAllergie) 
+                  {
+                    echo '<input name="cbx' . $uneAllergie -> id . '"" type="checkbox" value="' . $uneAllergie -> id . '" /> ' . $uneAllergie -> nom . '<br />';
+                  }
+                  ?>
+				      </div>
+          </div>
+      	</div><br \> 
 
-
+        
 
 
       	 <!-- INPUT BOUTON RADIO HEBERGEMENT -->

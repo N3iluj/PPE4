@@ -53,17 +53,20 @@ class HebergementController extends \BaseController {
 
 			//ON RECUPERE TOUS LES INPUTS D ALLERGIES
 
-			for ($i = 0; $i < 13; $i++)
-			{
-				$inputAllergie = Input::get('allergie' . $i);
+			 $allergies = Allergie::all();
+             foreach ($allergies as $uneAllergie)
+             {
+             	$inputAllergie = Input::get('cbx' . $uneAllergie -> id);
 
-				//SI L ALLERGIE EST COCHEE, ON L INSERT EN BASE AVEC L ID DE L UTILISATEUR CORRESPONDANT
-
+             	//SI L ALLERGIE EST COCHEE, ON L INSERT EN BASE AVEC L ID DE L UTILISATEUR CORRESPONDANT
+             	
     			if (isset($inputAllergie))
     			{
-    				DB::insert('insert into allergies (nom, user_id) values (?, ?)', array($inputAllergie, $userid));
+    				DB::insert('insert into users_allergies (user_id, allergie_id) values (?, ?)', array($userid, $inputAllergie));
     			}
-			}
+
+             }
+
 
 
 			//ON TERMINE AVEC LA MISE A JOUR DES INFOS DE L UTILISATION EN BASE
@@ -91,7 +94,7 @@ class HebergementController extends \BaseController {
 
 
 				return Redirect::to('auth/login')->with(Session::flash('success', "Inscription terminée. Un email contenant les informations sur l'exposition vous a été envoyé."));
-
+				
 				
 			}
 		

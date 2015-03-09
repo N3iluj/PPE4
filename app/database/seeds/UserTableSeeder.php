@@ -5,7 +5,7 @@ class UserTableSeeder extends Seeder {
     {
 
 
-        /*DB::table('allergies')->insert(
+        DB::table('allergies')->insert(
  
             array(
                 array(
@@ -98,7 +98,7 @@ class UserTableSeeder extends Seeder {
 
 
                )
-        );*/
+        );
 
 
 
