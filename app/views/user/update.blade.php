@@ -18,7 +18,7 @@
         <li class="active"><a href="#">Mon profil </a></li>
          @if (Auth::check())
             @if((Auth::user()->statut=="admin"))
-                <li><a href="#">Administration</a></li>
+                <li>{{HTML::link('user/index', 'Administration')}}</li>
             @endif
           @endif
       </ul>
