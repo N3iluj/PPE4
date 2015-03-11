@@ -48,7 +48,7 @@ class AuthController extends BaseController {
 			if (Auth::attempt($user)) 
 			{
 		  		return Redirect::intended('user/show')
-				->with(Session::flash('success', 'Vous êtes connecté') . Auth::user()->username);
+				->with(Auth::user()->username);
 			}
 		
 			return Redirect::to('auth/login')->with(Session::flash('fail', 'Login ou mot de passe incorrect'))->withInput();
