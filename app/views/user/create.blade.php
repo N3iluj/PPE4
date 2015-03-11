@@ -158,7 +158,7 @@
         </div> <br \>
 
 
-        <!-- INPUT CHECK BOX CHECK ACCEPTATION CGU -->
+        <!-- FIN INPUT CHECK BOX CHECK ACCEPTATION CGU -->
 
         <div class="form-group">
           <div style="text-align: center;">

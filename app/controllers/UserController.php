@@ -221,7 +221,99 @@ class UserController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$rules = array('pseudo' => 'max:50|min:1', 'nom' => 'required|max:50|min:1','prenom' => 'required|max:50|min:1', 'dateJ'=>'alpha_num', 'dateA'=>'alpha_num', 'adresse' => 'max:100|min:3','ville' => 'max:50|min:3', 'tel' => 'max:30|min:10','mail' => 'required|email');	
+		$validation=Validator::make(Input::all(),$rules);
+		
+
+  		if ($validation->fails())
+  		{
+  			Session::flash('fail', $validation);
+   			return Redirect::to('user/show')->withInput();
+  		} 
+
+  		else
+  		{
+
+  			//INSTANCIATION DE L'UTILISATEUR
+
+
+			$user = User::find(Input::get('user'));
+
+
+			//VERIFIE SI ADRESSE EMAIL DEJA UTILISE
+
+			$mail = Input::get('mail');
+			$res = DB::table('users')->where('email', $mail)->first();
+			if (empty($res)) 
+			{
+				$user -> email = $mail;
+			}
+			else
+			{
+				Session::flash('fail', 'Adresse e-mail déjà utilisée');
+   				return Redirect::to('user/show')->withInput(Input::except('mail'));					
+			}
+
+
+
+			//VERIFIE SI PSEUDO DEJA UTILISE
+
+			$res = DB::table('users')->where('username', $pseudo)->first();
+			if (empty($res)) 
+			{
+				$user -> username = $pseudo;
+			}
+			else
+			{
+				Session::flash('fail', 'Pseudo déjà utilisé');
+   				return Redirect::to('user/show')->withInput(Input::except('pseudo'));					
+			}
+
+
+			//VERIFIE SI TEL DEJA UTILISE
+
+			$tel = Input::get('tel');
+			$res = DB::table('users')->where('tel', $tel)->first();
+			if (empty($res)) 
+			{
+				$user -> tel = $tel;
+			}
+			else
+			{
+				Session::flash('fail', 'Numéro de téléphone déjà utilisé');
+   				return Redirect::to('user/show')->withInput(Input::except('tel'));					
+			}
+
+
+
+			//FORMATAGE DE LA DATE DE NAISSANCE
+
+			$date = Input::get('dateA') .'-'. Input::get('dateM') . '-' . Input::get('dateJ');
+			$user -> date_naissance = $date;
+
+
+
+			$user-> nom=Input::get('nom');
+			$user-> prenom=Input::get('prenom');
+			$user-> statut=Input::get('statut');
+			$user-> adresse=Input::get('adresse');
+			$user-> cp=Input::get('cp');
+			$user-> ville=Input::get('ville');
+
+
+			//INSERTION EN BASE
+
+			if($user->save())
+			{
+				if (Auth::attempt(array('email' => $mail, 'password' => $pass))) 
+				{
+    				return Redirect::to('user/show');
+				}
+				
+			}
+
+		}
+
 	}
 
 
