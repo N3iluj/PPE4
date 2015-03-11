@@ -15,10 +15,10 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Mon profil </a></li>
+        <li class="active">{{HTML::link('user/show', 'Mon profil')}}</li>
          @if (Auth::check())
             @if((Auth::user()->statut=="admin"))
-                <li>{{HTML::link('user/index', 'Administration')}}</li>
+                <li>{{HTML::link('user', 'Administration')}}</li>
             @endif
           @endif
       </ul>
