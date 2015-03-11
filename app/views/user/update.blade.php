@@ -58,8 +58,10 @@
 
          <div id="formMail" class="form-group">
           <label id="labelMail" class="col-md-2 control-label" for="mail"> Adresse e-mail <span style="color: red;">*</span></label>
+            <div class="col-md-5">
             {{ Form::email('mail', null, array('id'=>'mail', 'class' => 'form-control', 'placeholder'=>'Adresse e-mail', 'onblur'=>'checkMail()', 'data-toggle'=>'mail', 'data-placement'=>'right', 'data-content'=>"L'adresse e-mail doit être valide" )) }}
-        </div>
+            </div>
+          </div>
 
           <div id="formPseudo" class="form-group">
           <label id="labelPseudo" class="col-md-2 control-label" for="pseudo">Pseudo </label>
