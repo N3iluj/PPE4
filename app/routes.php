@@ -60,6 +60,14 @@ Route::get('hello', function()
 }
 );
 
+//ROUTE RENVOYE LE CGU 
+
+
+Route::get('cgu', function()
+{
+    return View::make('projet/cgu');
+});
+
 
 
 //ROUTE PAGE 404 SI INCONNUE
