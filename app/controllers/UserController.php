@@ -17,6 +17,8 @@ class UserController extends \BaseController {
 	public function index()
 	{
 		//
+		$user=User::all();
+		return View::make('user/readall')->with('lesuser',$lesuser);
 	}
 
 
