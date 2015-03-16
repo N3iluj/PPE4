@@ -38,96 +38,53 @@
   <a href="#" class="btn btn-primary">Export</a>
   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><span class="caret"></span></a>
   <ul class="dropdown-menu">
-    <li><a href="#">Action</a></li>
-    <li><a href="#">Another action</a></li>
-    <li><a href="#">Something else here</a></li>
+    <li><a href="#">VOUS</a></li>
+    <li><a href="#">ETES</a></li>
+    <li><a href="#">DES</a></li>
     <li class="divider"></li>
-    <li><a href="#">Separated link</a></li>
+    <li><a href="#">GROSSES MERDES</a></li>
   </ul>
-</div>
+</div><br \><br \>
 
 
 <!-- TABLEAU -->
 
-<?php $nb = 1 ?>
-
 <table class="table table-striped table-hover ">
+
   <thead>
+
     <tr>
+
       <th>#</th>
       <th>Pseudo</th>
       <th>Nom</th>
       <th>Prénom</th>
-      <th>N° Tel</th>
-      <th>Email</th>
+      <th>Téléphone</th>
+      <th>Adresse e-mail</th>
+
     </tr>
+
   </thead>
+
   <tbody>
-@foreach($lesuser as $users)
-      <tr class="info">
-      <td>{{$nb}}</td>
+
+    @foreach($lesuser as $users)
+
+    <tr>
+
+      <td>{{$users -> id}}</td>
       <td>{{$users->username}}</td>
       <td>{{$users->nom}}</td>
       <td>{{$users->prenom}}</td>
       <td>{{$users->tel}}</td>
       <td>{{$users->email}}</td>
-    </tr>
-<?php $nb = $nb+1 ?>
-@endforeach
 
+    </tr>
 
+    @endforeach
 
-  <!--
-    <tr>
-      <td>1</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr class="info">
-      <td>3</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr class="success">
-      <td>4</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr class="danger">
-      <td>5</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr class="warning">
-      <td>6</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr class="active">
-      <td>7</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>-->
   </tbody>
+
 </table> 
 
 @stop

@@ -39,16 +39,17 @@ Route::resource('repas', 'RepasController');
 
 
 
-//NECESSITE D ETRE LOG POUR AVOIR ACCES A LA CREATION D'UN PROJET
+//NECESSITE D ETRE LOG POUR AVOIR ACCES A LA CREATION D'UN PROJET OU D UN HEBERGEMENT
 
 Route::group(array('before'=>'auth'), function()
 {
 	Route::resource('projet', 'ProjetController');
 });
 
-
+Route::group(array('before'=>'auth'), function()
+{
 Route::resource('hebergement', 'HebergementController');
-
+});
 
 
 
@@ -65,7 +66,7 @@ Route::get('hello', function()
 
 Route::get('cgu', function()
 {
-    return View::make('projet/cgu');
+    return View::make('cgu');
 });
 
 

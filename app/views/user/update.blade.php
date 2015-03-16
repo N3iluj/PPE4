@@ -40,7 +40,7 @@
 
 <ul class="nav nav-tabs">
   <li class="active"><a href="#info" data-toggle="tab">Vos informations</a></li>
-  <li><a href="#projet" data-toggle="tab">Votre projet</a></li>
+  <li><a href="#projet" data-toggle="tab">Vos projets</a></li>
   <li><a href="#hebergement" data-toggle="tab">Votre hébergement</a></li>
 </ul>
 
@@ -51,7 +51,7 @@
 <div id="myTabContent" class="tab-content">
   <div class="tab-pane fade active in" id="info">
     <p>
-    {{Form::open(array('url' => 'user/' . $unUser->id, 'method' => 'PUT','class'=>'form-horizontal', 'onsubmit'=>'return checkForm();'))}}
+    {{Form::open(array('url' => '/user/' . $unUser->id, 'method' => 'PUT','class'=>'form-horizontal', 'onsubmit'=>'return checkForm();'))}}
     {{ Form::hidden('user', Auth::user()->id) }}
       <fieldset>
         <legend>Modification de vos informations</legend><br \><br \><br \>
@@ -132,7 +132,7 @@
 
               <!-- CREATION DU SELECT POUR LE MOIS DE NAISSANCE -->
 
-              <select class="form-control">
+              <select name="dateM" class="form-control">
 
                 <?php
 
@@ -225,7 +225,17 @@
 
             else
             {
-
+              echo '<div id="formStatut" class="form-group">
+                      <label class="col-md-2 control-label" for="statut">Vous êtes? </label>
+                      <div class="col-md-10">
+                      <div class="radio">
+                            <label>
+                              <input type="radio" name="statut" id="statut" value="admin" checked=""  >
+                              Administrateur
+                            </label>
+                          </div>
+                      </div>
+                      </div>';
             }
 
           ?>
@@ -279,15 +289,11 @@
           </div> <br \><br \>
 
 
-
-            
+          </fieldset>
+            </p>
           </div>
 
-        </div>
-          </fieldset>
-        </div>     
-    </p>
-  </div>
+
 
 
 
@@ -296,9 +302,147 @@
 
   <div class="tab-pane fade" id="projet">
     <p>
-    {{Form::open(array('url' => 'user', 'method' => 'POST','class'=>'form-horizontal', 'onsubmit'=>'return checkForm();'))}}
       <fieldset>
-        <legend>Modification de votre projet</legend><br \><br \><br \>
+        <legend>Modification de vos projets</legend><br \>
+
+        @if(empty($lesProjets))
+
+        Vous n'avez pas encore créé de projet. Cliquez {{HTML::link('projet/create', 'ici')}} pour en créer un.
+
+        @else
+
+        @foreach ($lesProjets as $projet)
+
+        <h3> {{$projet['theme']}} </h3><br \><br \>
+
+
+        {{Form::open(array('url' => '/projet/' . $projet['id'], 'method' => 'PUT','class'=>'form-horizontal', 'onsubmit'=>'return checkForm();'))}}
+        {{ Form::hidden('user', Auth::user()->id) }}
+
+        <!-- INPUT THEME ET NB DE PIECES -->
+
+        <div id="formTheme" class="form-group">
+          <label id="labelTheme" class="col-md-2 control-label" for="theme"> Thème du projet </label>
+          <div class="col-md-5">
+            {{ Form::text('theme', $projet['theme'], array('id'=>'theme', 'class' => 'form-control', 'placeholder'=>'Ex : Star Wars')) }}
+          </div>
+        </div>
+
+
+        <div id="formPiece" class="form-group">
+          <label id="labelPiece" class="col-md-2 control-label" for="nbPiece">Nombre de pièces </label>
+          <div class="col-md-5">
+            {{ Form::number('piece', $projet['nb_piece'], array('id'=>'piece', 'class' => 'form-control', 'placeholder'=>'Nombre de pièces de votre projet', 'onblur'=>'checkNbPiece()')) }}
+          </div>
+        </div>
+
+
+        <!-- INPUT SUPERFICIE DU PROJET -->
+
+
+        <div id="formSuperficie" class="form-group">
+
+          <label id="labelSuperficie" class="col-md-2 control-label" for="superficie">Superficie (en mètres)</label>
+
+          <div class="col-md-2">
+            {{ Form::text('longueur', $projet['longueur'], array('id'=>'longueur', 'class' => 'form-control', 'placeholder'=>'Longueur', 'onblur'=>'checkLongueur()')) }}
+          </div>
+
+          <div class="col-md-1">
+            <label class="col-md-2 control-label">x</label>
+          </div>
+
+          <div class="col-md-2">
+            {{ Form::text('largeur', $projet['largeur'], array('id' => 'largeur', 'class' => 'form-control', 'placeholder'=>'Largeur', 'onblur'=>'checkLargeur()')) }}
+          </div>
+
+        </div>
+
+
+         <!-- INPUT CHOIX ELECTRICITE -->
+
+        @if ($projet['courant'] == 1)
+
+       <div id="formElectricite" class="form-group">
+          <label id="labelElectricite" class="col-md-2 control-label" for="elec">Avez-vous besoin d'electricité? </label>
+          <div class="col-md-10">
+            <div class="radio">
+              <label>
+                <input type="radio" name="elec" id="elec" value="1" checked=''>
+                Oui
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="elec" id="elec" value="0">
+                Non
+              </label>
+            </div>
+          </div>
+        </div>
+
+        @else
+
+         <div id="formElectricite" class="form-group">
+          <label id="labelElectricite" class="col-md-2 control-label" for="elec">Avez-vous besoin d'electricité? </label>
+          <div class="col-md-10">
+            <div class="radio">
+              <label>
+                <input type="radio" name="elec" id="elec" value="1">
+                Oui
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="elec" id="elec" value="0" checked=''>
+                Non
+              </label>
+            </div>
+          </div>
+        </div>
+
+        @endif
+
+
+         <!-- INPUT VALEUR DU DIAPORAMA -->
+
+        <div id="formEstimation" class="form-group">
+          <label id="labelEstimation" class="col-md-2 control-label" for="estimation">Estimez la valeur de votre diaporama</label>
+          <div class="col-md-3">
+            {{ Form::text('estimation', $projet['valeur'], array('id'=>'estimation', 'class' => 'form-control', 'placeholder'=>'0.00', 'onblur'=>'checkEstimation()')) }}
+          </div>
+          <div class="col-md-1">
+            <label id="labelEstimation" class="col-md-2 control-label" for="estimation">€</label>
+          </div>
+        </div><br \><br \>
+
+
+         <!-- BOUTON SUBMIT -->
+
+        <div class="form-group">
+            <div class="col-md-5">
+                {{Form::submit('Mettre à jour', array('class'=>'btn btn-primary', 'id'=>'submit'))}}
+                {{Form::close()}}
+              </div>
+              <div class="col-md-5">
+                {{ Form::open(array('url' => 'projet/' . $projet['id'])) }}
+                {{ Form::hidden('_method', 'DELETE') }}
+                {{ Form::submit('Supprimer', array('class' => 'btn btn-danger')) }}
+                {{Form::close()}}
+            </div>
+          </div> 
+
+
+        @endforeach
+
+         <div class="form-group">
+            <div class="col-md-5">
+                <h5> Cliquez {{HTML::link('projet/create', 'ici')}} pour ajouter un projet supplémentaire </h5><br \><br \><br \>
+            </div>
+          </div>
+
+        @endif
+
       </fieldset>
     </p>
   </div>
@@ -310,9 +454,174 @@
 
   <div class="tab-pane fade" id="hebergement">
     <p>
-    {{Form::open(array('url' => 'user', 'method' => 'POST','class'=>'form-horizontal', 'onsubmit'=>'return checkForm();'))}}
+    {{Form::open(array('url' => '/hebergement/' . $unUser -> id, 'method' => 'POST','class'=>'form-horizontal', 'onsubmit'=>'return checkForm();'))}}
+    {{ Form::hidden('user', Auth::user()->id) }}
       <fieldset>
-        <legend>Modification de vos informations d'hébergement</legend><br \><br \><br \>
+        <legend>Modification de vos informations d'hébergement</legend><br \>
+
+        <div class="col-md-12">
+          <h4> Nombre de repas du premier jour </h4><br \>
+        </div>
+
+         <div id="formRepas1mid" class="form-group">
+          
+          <label id="labelRepas1mid" class="col-md-2 control-label" for="repas1mid"> Repas du midi <span style="color: red;">*</span></label>
+          <div class="col-md-3">
+            {{ Form::number('repas1mid', $unUser -> repas1mid, array('id'=>'repas1mid', 'class' => 'form-control')) }}
+          </div>
+
+        </div>
+
+
+        <div id="formRepas1soir" class="form-group">
+
+          <label id="labelRepas1soir" class="col-md-2 control-label" for="repas1soir"> Repas du soir <span style="color: red;">*</span></label>
+          <div class="col-md-3">
+            {{ Form::number('repas1soir', $unUser -> repas1soir, array('id'=>'repas1soir', 'class' => 'form-control')) }}
+          </div>
+
+        </div><br \>
+
+        <!-- INPUT REPAS DEUXIEME JOUR -->
+
+        <div class="col-md-12">
+          <h4> Nombre de repas du deuxième jour </h4><br \>
+        </div>
+
+
+        <div id="formRepas2mid" class="form-group">
+          
+          <label id="labelRepas2mid" class="col-md-2 control-label" for="repas2mid"> Repas du midi <span style="color: red;">*</span></label>
+          <div class="col-md-3">
+            {{ Form::number('repas2mid', $unUser -> repas2mid, array('id'=>'repas2mid', 'class' => 'form-control')) }}
+          </div>
+        </div>
+
+
+         <div id="formRepas2soir" class="form-group">
+
+          <label id="labelRepas2soir" class="col-md-2 control-label" for="repas2soir"> Repas du soir <span style="color: red;">*</span></label>
+          <div class="col-md-3">
+            {{ Form::number('repas2soir', $unUser -> repas2soir, array('id'=>'repas2soir', 'class' => 'form-control')) }}
+          </div>
+
+        </div><br \><br \>
+
+
+        <!-- INPUT LISTE ALLERGIES -->
+
+        <div class="form-group">
+          <label id="labelAllergies" class="col-md-2 control-label" for="allergies"> Allergies </label>
+          <div class="col-md-3">
+              <div style="width:200px; height: 70px; overflow-y: scroll;"> 
+                <?php
+                  $allergies = Allergie::all();
+                  foreach ($allergies as $uneAllergie) 
+                  {
+                    foreach ($usersAllergies as $userAllergie)
+                    {
+                      if ($userAllergie -> allergie_id == $uneAllergie -> id)
+                      {
+                        echo '<input name="cbx' . $uneAllergie -> id . '"" type="checkbox" checked="checked" value="' . $uneAllergie -> id . '" /> ' . $uneAllergie -> nom . '<br />';
+                      }
+                      else
+                      {
+                        echo '<input name="cbx' . $uneAllergie -> id . '"" type="checkbox" value="' . $uneAllergie -> id . '" /> ' . $uneAllergie -> nom . '<br />';
+                      }
+                    }
+                    
+                  }
+                  ?>
+              </div>
+          </div>
+        </div><br \> 
+
+
+         <!-- INPUT BOUTON RADIO HEBERGEMENT -->
+
+
+         @if($unUser -> internat > 0 || $unUser -> salle > 0)
+
+        <div id="formHebergement" class="form-group">
+
+          <label class="col-md-2 control-label" for="hebergement">Avez-vous besoin d'un hebergement? </label>
+          <!-- {{ Form::label('statut',"Vous êtes? *", array('class'=>'col-lg-2 control-label')) }} -->
+          <div class="col-md-10">
+
+            <div class="radio">
+              <label>
+                <input type="radio" name="hebergement" id="hebergementOui" value="oui" onclick="showHebergement()" checked=''>
+                Oui
+              </label>
+            </div>
+
+            <div class="radio">
+              <label>
+                <input type="radio" name="hebergement" id="hebergementNon" value="non" onclick="hideHebergement()">
+                Non
+              </label>
+            </div>
+          </div>
+
+        </div><br \>
+
+        @else
+
+        <div id="formHebergement" class="form-group">
+
+          <label class="col-md-2 control-label" for="hebergement">Avez-vous besoin d'un hebergement? </label>
+          <!-- {{ Form::label('statut',"Vous êtes? *", array('class'=>'col-lg-2 control-label')) }} -->
+          <div class="col-md-10">
+
+            <div class="radio">
+              <label>
+                <input type="radio" name="hebergement" id="hebergementOui" value="oui" onclick="showHebergement()">
+                Oui
+              </label>
+            </div>
+
+            <div class="radio">
+              <label>
+                <input type="radio" name="hebergement" id="hebergementNon" value="non" onclick="hideHebergement()" checked=''>
+                Non
+              </label>
+            </div>
+          </div>
+
+        </div><br \>
+
+        @endif
+
+
+        <!-- INPUT NOMBRE D'HEBERGEMENTS -->
+
+
+        <div id="showHebergement" class="form-group" style="display: none;">
+          
+          <label id="labelInternat" class="col-md-2 control-label" for="internat"> Nombre de lits à l'internat </label>
+          <div class="col-md-3">
+            {{ Form::number('internat', $unUser -> salle, array('id'=>'lit', 'class' => 'form-control')) }}
+          </div>
+
+
+
+          <label id="labelSalle" class="col-md-2 control-label" for="salle"> Dans la salle d'exposition </label>
+          <div class="col-md-3">
+            {{ Form::number('salle', $unUser -> internat, array('id'=>'salle', 'class' => 'form-control')) }}
+          </div>
+        </div><br \><br \>
+
+
+         <!-- BOUTON SUBMIT -->
+
+        <div class="form-group">
+          <div style="text-align: center;">
+            {{Form::submit('Mettre à jour', array('class'=>'btn btn-primary', 'id'=>'submit'))}}
+            {{Form::close()}}
+          </div>
+        </div> <br \><br \>
+
+
       </fieldset>
     </p>
   </div>
@@ -322,6 +631,33 @@
 
 
 <script>
+
+if (document.getElementById('hebergementOui').checked)
+{
+  document.getElementById('showHebergement').style.display = "block"
+}
+else if (document.getElementById('hebergementNon').checked)
+{
+  document.getElementById('showHebergement').style.display = "none"
+}
+
+//AFFICHAGE INPUT NOMBRE HEBERGEMENT SI RADIO SUR OUI
+
+  function showHebergement() {
+        
+    document.getElementById('showHebergement').style.display = "block"
+
+  }
+
+
+   //DESACTIVE AFFICHAGE INPUT NOMBRE HEBERGEMENT SI RADIO SUR NON
+
+  function hideHebergement() {
+        
+    document.getElementById('showHebergement').style.display = "none"
+
+  }
+
 
 //VERIFICATION ADRESSE EMAIL
 

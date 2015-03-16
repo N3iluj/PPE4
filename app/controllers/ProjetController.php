@@ -65,10 +65,28 @@ class ProjetController extends \BaseController {
 
 			if($projet->save())
 			{
-				if (Auth::check()) 
+
+				$user = User::find($projet -> user_id);
+
+				// TRANSFORMATION OBJET USER TO ARRAY
+
+				DB::setFetchMode(PDO::FETCH_ASSOC);
+
+				$unUser = DB::table('users')->where('id', $user -> id)->first();
+
+				DB::setFetchMode(PDO::FETCH_CLASS);
+
+
+
+				// ENVOI DU MAIL
+
+				Mail::send('emails/inscription', $unUser, function($m) use ($user)
 				{
-    				return Redirect::to('hebergement/create');
-				}
+    				$m->to($user -> email, 'Lego')->subject('Inscription terminée !');
+				});
+
+
+				return Redirect::to('auth/login')->with(Session::flash('success', "Inscription terminée. Un email contenant les informations sur l'exposition vous a été envoyé."));
 				
 			}
 		
@@ -108,7 +126,37 @@ class ProjetController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$rules = array('theme' => 'required', 'piece' => 'required', 'longueur' => 'required', 'largeur' => 'required', 'estimation' => 'required');
+		$validation=Validator::make(Input::all(),$rules);
+  		if ($validation->fails())
+  		{
+  			Session::flash('fail', 'Certain(s) champs sont incorrect');
+   			return Redirect::to('user/show')->withInput();
+  		}
+  		else
+  		{
+			//INSTANCIATION DU PROJET
+
+			$projet = new Projet;
+
+			$projet-> theme=Input::get('theme');
+			$projet-> longueur=Input::get('longueur');
+			$projet-> largeur=Input::get('largeur');
+			$projet-> nb_piece=Input::get('piece');
+			$projet-> valeur=Input::get('estimation');
+			$projet-> courant=Input::get('elec');
+			$projet-> user_id=Input::get('user'); 
+
+
+			//INSERTION EN BASE
+
+			if($projet->save())
+			{
+				Session::flash('success', 'Modifications enregistrées');
+    			return Redirect::back();
+			}
+
+		}
 	}
 
 
@@ -120,7 +168,13 @@ class ProjetController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$unProjet=Projet::find($id);
+
+		if ($unProjet -> delete())
+		{
+			Session::flash('danger', 'Projet supprimé');
+			return Redirect::to('/user/show');
+		}
 	}
 
 

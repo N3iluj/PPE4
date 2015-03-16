@@ -91,7 +91,7 @@
 
         <div class="form-group">
           <div style="text-align: center;">
-            {{Form::submit('Suivant', array('class'=>'btn btn-primary', 'id'=>'submit'))}}
+            {{Form::submit('Terminer', array('class'=>'btn btn-primary', 'id'=>'submit'))}}
             {{Form::close()}}
           </div>
         </div> <br \><br \>

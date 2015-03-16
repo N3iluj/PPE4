@@ -177,7 +177,7 @@ class UserController extends \BaseController {
 			{
 				if (Auth::attempt(array('email' => $mail, 'password' => $pass))) 
 				{
-    				return Redirect::to('projet/create');
+    				return Redirect::to('hebergement/create');
 				}
 				
 			}
@@ -197,7 +197,13 @@ class UserController extends \BaseController {
 	{
 		$id = Auth::user()->id;
 		$unUser=User::find($id);
-		return View::make('user/update')->with('unUser', $unUser);
+
+		$lesProjets = User::find($id)->projets->toArray();
+
+		$usersAllergies = DB::table('users_allergies')->where('user_id', $id)->get();
+
+		return View::make('user/update')->with('unUser', $unUser)->with('lesProjets', $lesProjets)->with('usersAllergies', $usersAllergies);
+		
 	}
 
 
@@ -221,7 +227,7 @@ class UserController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$rules = array('pseudo' => 'max:50|min:1', 'nom' => 'required|max:50|min:1','prenom' => 'required|max:50|min:1', 'dateJ'=>'alpha_num', 'dateA'=>'alpha_num', 'adresse' => 'max:100|min:3','ville' => 'max:50|min:3', 'tel' => 'max:30|min:10','mail' => 'required|email');	
+		/*$rules = array('pseudo' => 'max:50|min:1', 'nom' => 'required|max:50|min:1','prenom' => 'required|max:50|min:1', 'dateJ'=>'alpha_num', 'dateA'=>'alpha_num', 'adresse' => 'max:100|min:3','ville' => 'max:50|min:3', 'tel' => 'max:30|min:10','mail' => 'required|email');	
 		$validation=Validator::make(Input::all(),$rules);
 		
 
@@ -232,7 +238,7 @@ class UserController extends \BaseController {
   		} 
 
   		else
-  		{
+  		{*/
 
   			//INSTANCIATION DE L'UTILISATEUR
 
@@ -244,29 +250,30 @@ class UserController extends \BaseController {
 
 			$mail = Input::get('mail');
 			$res = DB::table('users')->where('email', $mail)->first();
-			if (empty($res)) 
+			if (empty($res) || $res -> id == $user -> id) 
 			{
 				$user -> email = $mail;
 			}
 			else
 			{
 				Session::flash('fail', 'Adresse e-mail déjà utilisée');
-   				return Redirect::to('user/show')->withInput(Input::except('mail'));					
+   				return Redirect::to('user/show');					
 			}
 
 
 
 			//VERIFIE SI PSEUDO DEJA UTILISE
 
+			$pseudo = Input::get('pseudo');
 			$res = DB::table('users')->where('username', $pseudo)->first();
-			if (empty($res)) 
+			if (empty($res) || $res -> id == $user -> id) 
 			{
 				$user -> username = $pseudo;
 			}
 			else
 			{
 				Session::flash('fail', 'Pseudo déjà utilisé');
-   				return Redirect::to('user/show')->withInput(Input::except('pseudo'));					
+   				return Redirect::to('user/show');					
 			}
 
 
@@ -274,14 +281,14 @@ class UserController extends \BaseController {
 
 			$tel = Input::get('tel');
 			$res = DB::table('users')->where('tel', $tel)->first();
-			if (empty($res)) 
+			if (empty($res) || $res -> id == $user -> id) 
 			{
 				$user -> tel = $tel;
 			}
 			else
 			{
 				Session::flash('fail', 'Numéro de téléphone déjà utilisé');
-   				return Redirect::to('user/show')->withInput(Input::except('tel'));					
+   				return Redirect::to('user/show');					
 			}
 
 
@@ -305,14 +312,12 @@ class UserController extends \BaseController {
 
 			if($user->save())
 			{
-				if (Auth::attempt(array('email' => $mail, 'password' => $pass))) 
-				{
-    				return Redirect::to('user/show');
-				}
+					Session::flash('success', 'Modifications enregistrées');
+    				return Redirect::back();
 				
 			}
 
-		}
+		//}
 
 	}
 
