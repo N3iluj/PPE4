@@ -30,19 +30,25 @@
 </nav>
 @section('script')
 {{HTML::script('js/excellentexport.js') }}
+{{HTML::script('js/jspdf.js') }}
+{{HTML::script('js/base64.js') }}
+{{HTML::script('js/sprintf.js') }}
+{{HTML::script('js/tableExport.js') }}
+{{HTML::script('js/jquery.base64.js') }}
 @stop
 
 
 @section('contenu')
 @parent
+
 <!-- BOUTON EXPORT -->
 <div class="btn-group">
  <a href="#" class="btn btn-primary">Export</a>
   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
   <ul class="dropdown-menu">
     <li><a download="utilisateurs.xls" href="#" onclick="return ExcellentExport.excel(this, 'datatable', '');">Excel</a></li>
-    <li><a download="utilisateurs.csv" href="#" onclick="return ExcellentExport.excel(this, 'datatable', '');">CSV</a></li>
-    <li><a href="#">PDF</a></li>
+   <!-- <li><a download="utilisateurs.csv" href="#" onclick="return ExcellentExport.csv(this, 'datatable');">CSV</a></li>-->
+    <li><a href="#" onclick ="$('#datatable').tableExport({type:'pdf',escape:'false'});">PDF</a></li>
 
   </ul>
 </div><br \><br \>
