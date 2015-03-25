@@ -454,7 +454,7 @@
 
   <div class="tab-pane fade" id="hebergement">
     <p>
-    {{Form::open(array('url' => '/hebergement/' . $unUser -> id, 'method' => 'POST','class'=>'form-horizontal', 'onsubmit'=>'return checkForm();'))}}
+    {{Form::open(array('url' => '/hebergement/' . $unUser -> id, 'method' => 'PUT','class'=>'form-horizontal', 'onsubmit'=>'return checkForm();'))}}
     {{ Form::hidden('user', Auth::user()->id) }}
       <fieldset>
         <legend>Modification de vos informations d'hébergement</legend><br \>
@@ -518,19 +518,21 @@
                   $allergies = Allergie::all();
                   foreach ($allergies as $uneAllergie) 
                   {
+
+                    echo '<input name="cbx' . $uneAllergie -> id . '"" type="checkbox"';
+
                     foreach ($usersAllergies as $userAllergie)
                     {
                       if ($userAllergie -> allergie_id == $uneAllergie -> id)
                       {
-                        echo '<input name="cbx' . $uneAllergie -> id . '"" type="checkbox" checked="checked" value="' . $uneAllergie -> id . '" /> ' . $uneAllergie -> nom . '<br />';
-                      }
-                      else
-                      {
-                        echo '<input name="cbx' . $uneAllergie -> id . '"" type="checkbox" value="' . $uneAllergie -> id . '" /> ' . $uneAllergie -> nom . '<br />';
+                         echo 'checked="checked"';
                       }
                     }
-                    
+
+                    echo 'value="' . $uneAllergie -> id . '" /> ' . $uneAllergie -> nom . '<br />';
+
                   }
+                    
                   ?>
               </div>
           </div>

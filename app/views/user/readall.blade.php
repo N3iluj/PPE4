@@ -38,11 +38,11 @@
   <a href="#" class="btn btn-primary">Export</a>
   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><span class="caret"></span></a>
   <ul class="dropdown-menu">
-    <li><a href="#">VOUS</a></li>
-    <li><a href="#">ETES</a></li>
-    <li><a href="#">DES</a></li>
+    <li><a href="#">ils</a></li>
+    <li><a href="#">ont</a></li>
+    <li><a href="#">fait</a></li>
     <li class="divider"></li>
-    <li><a href="#">GROSSES MERDES</a></li>
+    <li><a href="#">ça</a></li>
   </ul>
 </div><br \><br \>
 
