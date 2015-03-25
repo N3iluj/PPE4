@@ -15,10 +15,10 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active">{{HTML::link('user/show', 'Mon profil')}}</li>
+        <li>{{HTML::link('user/show', 'Mon profil')}}</li>
          @if (Auth::check())
             @if((Auth::user()->statut=="admin"))
-                <li>{{HTML::link('user/index', 'Administration')}}</li>
+                <li class="active">{{HTML::link('user/index', 'Administration')}}</li>
             @endif
           @endif
       </ul>
@@ -28,28 +28,29 @@
     </div>
   </div>
 </nav>
-
+@section('script')
+{{HTML::script('js/excellentexport.js') }}
+@stop
 
 
 @section('contenu')
 @parent
 <!-- BOUTON EXPORT -->
-<div class="btn-group open">
-  <a href="#" class="btn btn-primary">Export</a>
-  <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><span class="caret"></span></a>
+<div class="btn-group">
+ <a href="#" class="btn btn-primary">Export</a>
+  <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
   <ul class="dropdown-menu">
-    <li><a href="#">ils</a></li>
-    <li><a href="#">ont</a></li>
-    <li><a href="#">fait</a></li>
-    <li class="divider"></li>
-    <li><a href="#">ça</a></li>
+    <li><a download="utilisateurs.xls" href="#" onclick="return ExcellentExport.excel(this, 'datatable', '');">Excel</a></li>
+    <li><a download="utilisateurs.csv" href="#" onclick="return ExcellentExport.excel(this, 'datatable', '');">CSV</a></li>
+    <li><a href="#">PDF</a></li>
+
   </ul>
 </div><br \><br \>
 
 
 <!-- TABLEAU -->
 
-<table class="table table-striped table-hover ">
+<table id="datatable" class="table table-striped table-hover ">
 
   <thead>
 
@@ -72,7 +73,7 @@
 
     <tr>
 
-      <td>{{$users -> id}}</td>
+      <td>{{$users->id}}</td>
       <td>{{$users->username}}</td>
       <td>{{$users->nom}}</td>
       <td>{{$users->prenom}}</td>
@@ -88,3 +89,5 @@
 </table> 
 
 @stop
+
+

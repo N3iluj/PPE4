@@ -6,7 +6,7 @@
     <title>Manifestation Lego®</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="Poncet Medhy, Charles Geoffrey, Einhart Guillaume et Julien Card">
+    <meta name="author" content="Poncet Mehdy, Charles Geoffrey, Einhart Guillaume et Julien Card">
 
     <!-- IMPORT DES STYLES CSS -->
 
